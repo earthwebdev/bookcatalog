@@ -13,6 +13,6 @@ router.get('/', filteredResults(BookModel), getReviews);
 router.get('/:bookId', getReviewsByBookId);
 router.post('/', AuthMiddleware, createReviews);
 router.patch('/:id', AuthMiddleware, updateReviews);
-router.delete('/:id', AuthMiddleware, authorize, deleteReviews);
+router.delete('/:id', AuthMiddleware, deleteReviews);
 
 export default router;

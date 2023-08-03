@@ -162,8 +162,8 @@ export const updateReviews = async (req, res) => {
         let data = {
             title, description, rating, url, bookId
         }
-        
-        if(reviewUserId === '' || reviewUserId !== userId ){
+                
+        if(reviewUserId === '' || (reviewUserId !== userId && req.user.roles === 'user') ){
             return res.status(400).json({
                 status: false,
                 message: 'You are not authorized to access this resource.'
@@ -214,13 +214,15 @@ export const deleteReviews = async (req, res) => {
         const reviewUserId = reviewData.userId;
         //console.log(req.body);
         const userId = req.user.id;
-        
-        if(reviewUserId === '' || reviewUserId !== userId ){
+        if(req.user.roles === 'admin'){
+
+        }
+        if(reviewUserId === '' || (reviewUserId !== userId && req.user.roles === 'user') ){
             return res.status(400).json({
                 status: false,
                 message: 'You are not authorized to access this resource.'
             }); 
-        }
+        } 
                 
         //return;
         //const review = await  ReviewModel.findOneAndUpdate({_id:id}, {$set: data}, {new: true});
