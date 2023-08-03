@@ -1,5 +1,10 @@
 import UserModel from "../models/users.model.js";
 import jsonwebtoken from "jsonwebtoken";
+
+import crypto from "crypto";
+
+import sendMail from "../utils/sendmail.js";
+
 export const getLogin = async (req, res) => {
     try {
         //console.log(req.body);
@@ -102,6 +107,105 @@ export const getProfile = async(req, res) => {
                 message: 'User get successfully.'
             })
         }
+    } catch (error) {
+        return res.status(400).json({
+            status: false,
+            message: error.message
+        })
+    }
+}
+
+export const fortgetPassword = async (req, res) => {
+    try {
+        const {email} = req.body;
+        console.log(email);
+        const user = await UserModel.findOne({email});
+
+        if(!user){
+            return res.status(400).json({
+                status: false,
+                message: 'Please enter the valid user email.'
+            });
+        }
+
+        const resettoken = user.getResetToken();
+        
+        console.log(resettoken, user);
+        //user.save({validateBeforeSave: false});
+        const mailMessage =
+            "your are using. Your reset token is <a href='http://localhost:5173/resetpassword/" +
+            resettoken + "'>Click here to reset password</a>" +
+            "<br> your token will expire in ten minutes.";
+        const data = {
+            to: user.email,
+            subject: "Password reset token",
+            message: mailMessage
+        } 
+        //console.log(data);
+        try {
+
+            await sendMail(data);
+            user.save({validateBeforeSave: false});
+        } catch (error) {
+            user.resetPasswordToken = "";
+            user.resetPasswordExpired = "";
+            await user.save({ validateBeforeSave: false });
+            return res.status(400).json({
+              success: false,
+              message: error.message,
+            });
+        }
+
+        return res.status(200).json({
+            status: true,
+            message: "Email sent successfully.",
+        });
+
+    } catch (error) {
+        return res.status(400).json({
+            status: false,
+            message: error.message
+        })
+    }
+}
+
+export const resetPassword = async (req, res) => {
+    try {
+        const {resettoken} = req.params;
+        const { password } = req.body;
+        const resetPassToken = crypto.createHash('sha512').update(resettoken, 'utf-8').digest('hex');
+        //{ $lte: 5 }
+        const today = Date.now();
+        const readableToday = new Date(today);
+        console.log(readableToday);
+        const user = await UserModel.findOne({resetPasswordToken: resetPassToken, resetPasswordExpired: {$gte: readableToday}});
+        console.log(user);
+        if(!user){
+            return res.status(400).json({
+                success: false,
+                message: "Invalid password token / password expired",
+              });
+        }
+
+        //const hashPass = await hashPassword(req.body.password);
+        const data = {
+            password,
+            resetPasswordToken: "",
+            resetPasswordExpired: "",
+        };
+        //await user.updateOne()
+        await UserModel.findOneAndUpdate(
+            { _id: user._id },
+            { $set: data },
+            {
+                new: true,
+            }
+        );
+
+        return res.status(200).json({
+            success: true,
+            message: "Password reset successfully",
+        });
     } catch (error) {
         return res.status(400).json({
             status: false,

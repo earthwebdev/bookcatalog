@@ -162,8 +162,8 @@ export const updateReviews = async (req, res) => {
         let data = {
             title, description, rating, url, bookId
         }
-                
-        if(reviewUserId === '' || (reviewUserId !== userId && req.user.roles === 'user') ){
+        console.log(userId, ' === ', reviewUserId.toString());
+        if(reviewUserId === '' || (reviewUserId.toString() !== userId && req.user.roles === 'user') ){
             return res.status(400).json({
                 status: false,
                 message: 'You are not authorized to access this resource.'
@@ -217,7 +217,7 @@ export const deleteReviews = async (req, res) => {
         if(req.user.roles === 'admin'){
 
         }
-        if(reviewUserId === '' || (reviewUserId !== userId && req.user.roles === 'user') ){
+        if(reviewUserId === '' || (reviewUserId.toString() !== userId && req.user.roles === 'user') ){
             return res.status(400).json({
                 status: false,
                 message: 'You are not authorized to access this resource.'

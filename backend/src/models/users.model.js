@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import crypto from "crypto";
 const UserSchema = new mongoose.Schema({
     name : {
         type: String,
@@ -28,6 +29,12 @@ const UserSchema = new mongoose.Schema({
     },
     jwt_token:{
         type: String
+    },
+    resetPasswordToken: {
+        type: String
+    },
+    resetPasswordExpired: {
+        type: Date,
     }
 },
 {
@@ -50,6 +57,31 @@ UserSchema.pre("save", async function(next) {
     this.password = hash;
     next();
 });
+
+UserSchema.pre(["updateOne", "findByIdAndUpdate", "findOneAndUpdate"], async function (next) {    
+    const data = this.getUpdate();
+    //console.log(data.$set.password, this.password);
+    if(data.$set.password !== undefined){
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(data.$set.password, salt);
+        console.log(hash, ' == ', salt);
+        data.$set.password = hash;
+        next();
+    } else {
+        next();
+    }    
+});
+
+
+UserSchema.methods.getResetToken = function() {
+    const resetToken = crypto.randomBytes(16).toString('hex');
+
+    this.resetPasswordToken = crypto.createHash('sha512').update(resetToken, 'utf-8').digest('hex');
+    this.resetPasswordExpired = Date.now() + 24*60*60*1000;
+
+    return resetToken;
+}
+    
 
 const UserModel = mongoose.model('User', UserSchema);
 
