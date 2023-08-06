@@ -52,6 +52,10 @@ const BookSchema = new mongoose.Schema({
     language:{
         type: String,
         required:true,
+    },
+    isFeatured: {
+        type: Boolean,
+        default: false,
     }
 });
 

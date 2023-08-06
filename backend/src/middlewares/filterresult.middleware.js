@@ -3,7 +3,7 @@ import express from 'express';
     filteredResults: object;
 } */
 
-const filteredResults = (Model) => async (req, res, next) =>  {
+const filteredResults = (Model, populateField, populateSelectField) => async (req, res, next) =>  {
     //console.log(Model);
         const filter = req.query;
         const queryObj = {...filter};
@@ -46,7 +46,10 @@ const filteredResults = (Model) => async (req, res, next) =>  {
         const endIndex = page * limit;
 
         queryData = queryData.skip(skipData).limit(limit);
-
+        if(populateField && populateSelectField){
+            queryData.populate(populateField, populateSelectField) 
+        }
+           
         const pagination = {};
 
         if(endIndex < total){

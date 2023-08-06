@@ -11,14 +11,15 @@ import dbConnection from "./config/db.config.js";
 const app = express();
 //db connection 
 dbConnection();
-//content type json fomat 
+//content type json fomat
+app.use(cors({origin: '*'}));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.use('/api/v1', indexRouter);
 
 app.use(morgan('combined'));
-app.use(cors());
+
 
 const PORT = process.env.PORT || 8082;
 app.listen(PORT, () => {
