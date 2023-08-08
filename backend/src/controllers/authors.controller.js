@@ -18,6 +18,39 @@ export const getAuthors = async (req, res) => {
     }
 }
 
+export const getAuthorById = async (req, res) => {
+    try {
+        const {id} = req.params;
+        if(! mongoose.Types.ObjectId.isValid(id)){
+            return res.status(400).json({
+                status: false,
+                message: 'Author not found.'
+            });
+        }
+        //console.log(id, 'id');
+        const authorData = await AuthorModel.findById(id);
+        //console.log(bookData);
+        if(!authorData){
+            return res.status(400).json({
+                status: false,
+                message: 'Author not found.'
+            }); 
+        }
+
+        return res.status(200).json({
+            status: true,
+            data: authorData,
+            message: 'Author found successfully.'
+        });
+    } catch (error) {
+        return res.status(400).json({
+            status: false,
+            message: error.message,
+        });
+    } 
+
+}
+
 export const createAuthors = async (req, res) => {
     try {
         //console.log(req.fileValidationError);

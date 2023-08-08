@@ -13,12 +13,12 @@ const HeaderComp = () => {
         <div className="flex flex-row justify-between items-center">
           <div className="flex flex-row justify-between items-center">
             <div className="logo font-bold mx-2 text-gray-300">
-              <Link href="/">Book Catalog</Link>
+              <Link to="/">Book Catalog</Link>
             </div>
 
             <ul className="list-none flex justify-center gap-4 text-gray-300">
               <li className="p-2">
-                <Link to="genres">Genres</Link>
+                <Link to="/genres">Genres</Link>
               </li>
               <li className="p-2">
                 <Link to="/authors">Authors</Link>

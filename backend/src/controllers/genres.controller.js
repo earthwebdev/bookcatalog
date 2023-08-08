@@ -18,6 +18,39 @@ export const getGenres = async (req, res) => {
     }
 }
 
+export const getGenreById = async (req, res) => {
+    try {
+        const {id} = req.params;
+        if(! mongoose.Types.ObjectId.isValid(id)){
+            return res.status(400).json({
+                status: false,
+                message: 'Genre not found.'
+            });
+        }
+        //console.log(id, 'id');
+        const genreData = await GenreModel.findById(id);
+        //console.log(bookData);
+        if(!genreData){
+            return res.status(400).json({
+                status: false,
+                message: 'Genre not found.'
+            }); 
+        }
+
+        return res.status(200).json({
+            status: true,
+            data: genreData,
+            message: 'Genre found successfully.'
+        });
+    } catch (error) {
+        return res.status(400).json({
+            status: false,
+            message: error.message,
+        });
+    } 
+
+}
+
 export const createGenres = async (req, res) => {
     try {
         //console.log(req.fileValidationError);
