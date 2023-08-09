@@ -28,7 +28,7 @@ export const getBooksById = async (req, res) => {
             });
         }
         //console.log(id, 'id');
-        const bookData = await BookModel.findById(id);
+        const bookData = await BookModel.findById(id).populate('authors','name').populate('genres', 'name');
         //console.log(bookData);
         if(!bookData){
             return res.status(400).json({
