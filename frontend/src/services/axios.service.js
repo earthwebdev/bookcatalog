@@ -13,3 +13,27 @@ export const getDataWithoutToken = async (url) => {
       console.error(error);
     }   */  
 }
+
+export const postDatasFromAxios = async(url='', posttype=get, data) => {
+  try {
+    //console.log(posttype, 'type', Server_url+url, data);
+    const responseData = await axios[posttype](Server_url+url, data);
+    //console.log(responseData);
+    return responseData.data;
+    
+  } catch (error) {
+    return error.response.data;    
+  }
+}
+
+
+export const getDataWithToken = async(url='', token) => {
+  try {
+    const responseData = await axios.get(Server_url+url, {headers: {'Authorization': `Bearer ${token}`}});
+    console.log(responseData);
+    return responseData.data;
+    
+  } catch (error) {
+    return error.response;    
+  }
+}

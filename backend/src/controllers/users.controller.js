@@ -36,10 +36,12 @@ export const getLogin = async (req, res) => {
         const data = {
             jwt_token: token,            
         }
-        await UserModel.findOneAndUpdate({_id: user._id}, {$set: data}, {new: true});
+        const updateUser = await UserModel.findOneAndUpdate({_id: user._id}, {$set: data}, {new: true});
         return res.status(200).json({
             status: true,
             token,
+            roles: updateUser.roles,
+            name: updateUser.name,
             message: 'User logged in successfulyly.'
         })
     } catch (error) {
