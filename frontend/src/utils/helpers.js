@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 
 export const getJWTToken = () => {
-    const { jwt } = useSelector((state) => state.auth);
-    return jwt;
+    const { token } = useSelector((state) => state.auth);
+    return token;
 }
 export const getLoggedIn = () => {
     const { isLoggedIn } = useSelector((state) => state.auth);
@@ -12,7 +12,6 @@ export const getRole = () => {
     const { role } = useSelector((state) => state.auth);
     return role;
 }
-
 
 export const getRoleAccess = (data) => {
     const { role } = useSelector((state) => state.auth);

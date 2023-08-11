@@ -89,7 +89,7 @@ const HeaderComp = () => {
                       ></path>
                     </svg>
                   </div>
-                  {name}
+                  <Link to={'/dashboard'}>{name}</Link>
                   <Link to={'/logout'}>Logout</Link>
                 
 

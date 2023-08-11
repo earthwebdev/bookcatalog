@@ -17,7 +17,29 @@ export const getGenres = async (req, res) => {
         });
     }
 }
+export const getAllGenres = async (req, res) => {
+    try {    
+        const genreData = await GenreModel.find().select('name');
+        //console.log(bookData);
+        if(!genreData){
+            return res.status(400).json({
+                status: false,
+                message: 'Genre not found.'
+            }); 
+        }
 
+        return res.status(200).json({
+            status: true,
+            data: genreData,
+            message: 'Genre found successfully.'
+        });
+    } catch (error) {
+        return res.status(400).json({
+            status: false,
+            message: error.message,
+        });
+    } 
+}
 export const getGenreById = async (req, res) => {
     try {
         const {id} = req.params;
@@ -132,7 +154,7 @@ export const updateGenres = async (req, res) => {
         if(! mongoose.Types.ObjectId.isValid(id)){
             return res.status(400).json({
                 status: false,
-                message: 'Genre not found aaaa.'
+                message: 'Genre not found.'
             });
         }
         //console.log(id, 'id');
@@ -160,7 +182,7 @@ export const updateGenres = async (req, res) => {
         } */
 
         //console.log(req.body);
-        const {name, description, parentsId} = req.body;
+        const {name, description, parentsId, isSubmitted} = req.body;
         if(!name || !description){
             return res.status(400).json({
                 status: false,
@@ -169,7 +191,8 @@ export const updateGenres = async (req, res) => {
         }
         let public_id;
         let url;
-        if(req.file){
+        //console.log(isSubmitted, ' == ', req.file );
+        if(isSubmitted && req.file ){
             try {
                 // Upload the image
                 const respCloud = await cloudinary.v2.uploader.upload(req.file.path);

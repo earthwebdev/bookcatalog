@@ -14,7 +14,7 @@ const GenresPage = () => {
     const query = new URLSearchParams(useLocation().search);
     const page = query.get("page");
     const getGenresPageLists = async() => {
-        console.log('tested' + page);
+        //console.log('tested' + page);
         try {
             
             //console.log(reqs);

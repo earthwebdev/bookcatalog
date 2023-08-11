@@ -4,7 +4,7 @@ import { useState } from 'react'
 import {Link} from "react-router-dom";
 import { postDatasFromAxios } from '../services/axios.service';
 import LoginComp from '../components/Login';
-
+import {getLoggedIn, getRoleAccess} from '../utils/helpers';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../reduxtoolkits/authSlice';
 import { useNavigate } from "react-router-dom";
@@ -21,12 +21,21 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-     const isLogin = useSelector((state) => state.auth.isLoggedIn);
-    //console.log(isLogin);
+     //const isLogin =  useSelector((state) => state.auth.isLoggedIn);
+     const isLogin = getLoggedIn();
+     //const roleAdmin = useSelector((state) => state.auth.role);
+     const isAdmin = getRoleAccess('admin');
+    console.log(isLogin, isAdmin);
     
      useEffect( () => {
         if(isLogin){
+          if(isAdmin)
+          {
+            //console.log('admin');
+            return navigate('/admin_dashboard');
+          }else{
             return navigate('/dashboard');    
+          }            
         }       
     }, []) 
 
@@ -69,7 +78,15 @@ const LoginPage = () => {
         console.log(resp)
         dispatch(login(resp));                
         successToaster(resp?.message);
-        return navigate("/dashboard");
+        //console.log(resp?.roles, 'roles');
+        if(resp?.roles === 'admin'){
+          //console.log('admin roles ');
+          return navigate("/admin_dashboard");
+        } else{
+          console.log('user roles ');
+          return navigate("/dashboard");
+        }
+        
       }
       else{
         //console.log(resp.response.data.message);

@@ -16,7 +16,7 @@ const filteredResults = (Model, populateField, populateSelectField) => async (re
         }
         //console.log(queryObj);    
         let queryStr = JSON.stringify(queryObj)
-        queryStr = queryStr.replace(/\b(gt|gte|lt|lte|eq|neq)\b/ig, match => `$${match}`);
+        queryStr = queryStr.replace(/\b(gt|gte|lt|lte|eq|neq|regex)\b/ig, match => `$${match}`);
         //console.log(JSON.parse(queryStr));
         let query = JSON.parse(queryStr);
         let queryData = Model.find(query);
