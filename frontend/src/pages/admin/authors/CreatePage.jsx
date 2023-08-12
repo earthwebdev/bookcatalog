@@ -5,9 +5,9 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
  import {successToaster, errorToaster} from '../../../services/toastify.service'
 
-const AdminCreateGenrePage = () => {
+const AdminCreateAuthorPage = () => {
   const navigate = useNavigate();
-  const [allGenres, setAllGenre] = useState([]);
+  //const [allAuthors, setAllAuthor] = useState([]);
   const jwtToken = getJWTToken();
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
@@ -16,19 +16,19 @@ const AdminCreateGenrePage = () => {
   console.log(watch("name")); 
   console.log(watch("description")); 
   console.log(watch("photo")); 
-  console.log(watch("parentId"));
+  //console.log(watch("parentId"));
 
-  const getAllGenresDatas = async () => {
+  /* const getAllAuthorsDatas = async () => {
     //console.log(jwtToken, 'token');
-    const resp = await getDataWithToken('/genres/all', jwtToken);
+    const resp = await getDataWithToken('/authors/all', jwtToken);
     console.log(resp)
     if(resp.status){
-       setAllGenre(resp.data);
+       setAllAuthor(resp.data);
     }
-  }
-  useEffect(() => {
-      getAllGenresDatas();
-  }, []);
+  } */
+  /* useEffect(() => {
+      getAllAuthorsDatas();
+  }, []); */
 
   const onSubmitFormHandle = async (data) => {
     console.log(data);
@@ -36,12 +36,11 @@ const AdminCreateGenrePage = () => {
     formData.append("name", data.name);
     formData.append("description", data.description);
     formData.append("photo", data.photo[0]);
-    formData.append("parentId", data.parentId);
-    const resp = await postDatasFromAxiosWithToken('/genres', 'post' , formData, jwtToken);
+    const resp = await postDatasFromAxiosWithToken('/authors', 'post' , formData, jwtToken);
     console.log(resp);
     if(resp.status){
       successToaster(resp.message);
-      return navigate('/admin/genres');
+      return navigate('/admin/authors');
     } else {
       errorToaster(resp.message);
     }
@@ -49,19 +48,19 @@ const AdminCreateGenrePage = () => {
 
   return (
     <div className="flex flex-col gap-4">
-        <h2 className="py-2 text-bold text-[20px]">Genre Create</h2>
+        <h2 className="py-2 text-bold text-[20px]">Author Create</h2>
         <div className="rounded-sm border-4 border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           <div className="mb-6 text-xl font-semibold text-black dark:text-white">
           <form onSubmit={handleSubmit(onSubmitFormHandle)}>
           <div className="flex flex-col gap-5.5 p-6.5">
               <div className='mb-4'>
                 <label className="mb-3 block text-black dark:text-white">
-                  Genre Name
+                  Author Name
                 </label>
                 <input
                   type="text"
                   {...register("name", { required: true })}
-                  placeholder="Genre Name"
+                  placeholder="Author Name"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />
                 {errors.name && <span className='text-red-500'>This field is required</span>}
@@ -69,7 +68,7 @@ const AdminCreateGenrePage = () => {
 
               <div className='my-4'>
                 <label className="mb-3 block text-black dark:text-white">
-                Genre Description
+                Author Description
                 </label>
                 <textarea
                   rows={6}
@@ -82,7 +81,7 @@ const AdminCreateGenrePage = () => {
 
               <div className='my-4'>
                 <label className="mb-3 block font-medium text-black dark:text-white">
-                  Genre Image
+                  Author Image
                 </label>
                 <input
                   type="file"
@@ -100,21 +99,21 @@ const AdminCreateGenrePage = () => {
                 {errors.photo && <span className='text-red-500'>{errors.photo.message}</span>}
               </div>
               
-              <div className='my-4'>
+              {/* <div className='my-4'>
                 <label className="mb-3 block font-medium text-black dark:text-white">
                   Parent Id
                 </label>
                 <select {...register("parentId", { required: false })} className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input">
                   <option value="">Select Parent Id</option>
                     {
-                       allGenres && allGenres.length > 0 && allGenres.map((genre) => {
+                       allAuthors && allAuthors.length > 0 && allAuthors.map((author) => {
                          return (
-                          <option  key={genre?._id} value={genre?._id}>{genre?.name}</option>
+                          <option  key={author?._id} value={author?._id}>{author?.name}</option>
                          )
                        })
                     }                    
                   </select>
-              </div>
+              </div> */}
               <button type='submit' className="w-full mt-8 px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
                   Create
                 </button>
@@ -127,4 +126,4 @@ const AdminCreateGenrePage = () => {
   )
 }
 
-export default AdminCreateGenrePage
+export default AdminCreateAuthorPage

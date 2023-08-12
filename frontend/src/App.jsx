@@ -23,7 +23,11 @@ import AdminCreateGenrePage from "./pages/admin/genres/CreateGenrePage";
 import AdminEditGenrePage from "./pages/admin/genres/EditGenrePage";
 
 //author routes info
-import AdminAuthorsPage from './pages/admin/AuthorsPage'
+import AdminAuthorsListPage from './pages/admin/authors/ListPage';
+import AdminAuthorsViewPage from './pages/admin/authors/ViewPage';
+
+import AdminCreateAuthorPage from "./pages/admin/authors/CreatePage";
+import AdminEditAuthorPage from "./pages/admin/authors/EditPage";
 
 import ForgetPasswordPage from "./pages/ForgetPasswordPage";
 import LogoutPage from "./pages/LogoutPage";
@@ -59,14 +63,20 @@ function App() {
           <Route path="/" element={<Sidebar />}>
             <Route path="/admin" element={<PrivateRoutes />}>
               <Route path="dashboard" element={<AdminDashboardPage />} />              
-              <Route path="genres" element=''>
+                <Route path="genres" element=''>
                   <Route path=":id" element={<AdminGenresViewPage />} />
                   <Route path="edit/:id" element={<AdminEditGenrePage />} />
                   <Route path="create" element={<AdminCreateGenrePage />} />
                   <Route index element={<AdminGenresListPage />} />
                 </Route>
 
-              <Route path="authors" element={<AdminAuthorsPage />} />
+                <Route path="authors" element=''>
+                  <Route path=":id" element={<AdminAuthorsViewPage />} />
+                  <Route path="edit/:id" element={<AdminEditAuthorPage />} />
+                  <Route path="create" element={<AdminCreateAuthorPage />} />
+                  <Route index element={<AdminAuthorsListPage />} />
+                </Route>
+            
               {/* <Route path='/lectures' element={<LecturesPage />} />
                         <Route path='/lectures/add' element={<AddLecturesPage />} />
                         <Route path='/lectures/:id' element={<EditLecturesPage />} />
