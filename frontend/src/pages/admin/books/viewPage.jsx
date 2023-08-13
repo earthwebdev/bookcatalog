@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
  import {successToaster, errorToaster} from '../../../services/toastify.service'
 
-const AdminEditBookPage = () => {
+const AdminBooksViewPage = () => {
   const navigate = useNavigate();
   const {id} = useParams();
   console.log(id);
@@ -107,10 +107,10 @@ const AdminEditBookPage = () => {
                   Book Title
                 </label>
                 <input
-                  type="text" defaultValue={book?.title}
+                  type="text" defaultValue={book?.title} disabled
                   {...register("title", { required: true })}
                   placeholder="Book title"
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                  className="w-full  bg-transparent py-3  font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />
                 {errors.title && (
                   <span className="text-red-500">This field is required</span>
@@ -123,9 +123,9 @@ const AdminEditBookPage = () => {
                 </label>
                 <textarea
                   rows={6}
-                  placeholder="Enter description" defaultValue={book?.description}
+                  placeholder="Enter description" defaultValue={book?.description} disabled
                   {...register("description", { required: true })}
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                  className="w-full  bg-transparent py-3  font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 ></textarea>
                 {errors.description && (
                   <span className="text-red-500">This field is required</span>
@@ -136,10 +136,10 @@ const AdminEditBookPage = () => {
                   Book Price
                 </label>
                 <input
-                  type="text"  defaultValue={book?.price}
+                  type="text"  defaultValue={book?.price} disabled
                   {...register("price", { required: true })}
                   placeholder="Book price"
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                  className="w-full  bg-transparent py-3  font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />
                 {errors.price && (
                   <span className="text-red-500">This field is required</span>
@@ -151,10 +151,10 @@ const AdminEditBookPage = () => {
                   Book Discount Percentage
                 </label>
                 <input
-                  type="text"  defaultValue={book?.discountPercentage}
+                  type="text"  defaultValue={book?.discountPercentage} disabled
                   {...register("discountPercentage", { required: false })}
                   placeholder="Book discount percentage"
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                  className="w-full  bg-transparent py-3  font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />
                 {errors.discountPercentage && (
                   <span className="text-red-500">This field is required</span>
@@ -166,10 +166,10 @@ const AdminEditBookPage = () => {
                   Book Stock
                 </label>
                 <input
-                  type="number" defaultValue={book?.stock}
+                  type="number" defaultValue={book?.stock} disabled
                   {...register("stock", { required: true })}
                   placeholder="Book stock"
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                  className="w-full  bg-transparent py-3  font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />
                 {errors.stock && (
                   <span className="text-red-500">This field is required</span>
@@ -181,10 +181,10 @@ const AdminEditBookPage = () => {
                   Book Page Count
                 </label>
                 <input
-                  type="text" defaultValue={book?.pageCount}
+                  type="text" defaultValue={book?.pageCount} disabled
                   {...register("pageCount", { required: true })}
                   placeholder="Book page count"
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                  className="w-full  bg-transparent py-3  font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />
                 {errors.pageCount && (
                   <span className="text-red-500">This field is required</span>
@@ -196,10 +196,10 @@ const AdminEditBookPage = () => {
                   Book Weight(grams)
                 </label>
                 <input
-                  type="text" defaultValue={book?.weight}
+                  type="text" defaultValue={book?.weight} disabled
                   {...register("weight", { required: true })}
                   placeholder="Book weight"
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                  className="w-full  bg-transparent py-3  font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />
                 {errors.weight && (
                   <span className="text-red-500">This field is required</span>
@@ -210,10 +210,10 @@ const AdminEditBookPage = () => {
                   Book ISBN
                 </label>
                 <input
-                  type="text" defaultValue={book?.ISBN}
+                  type="text" defaultValue={book?.ISBN} disabled
                   {...register("ISBN", { required: true })}
                   placeholder="Book ISBN"
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                  className="w-full  bg-transparent py-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />
                 {errors.ISBN && (
                   <span className="text-red-500">This field is required</span>
@@ -224,10 +224,10 @@ const AdminEditBookPage = () => {
                   Book Language
                 </label>
                 <input
-                  type="text" defaultValue={book?.language}
+                  type="text" defaultValue={book?.language} disabled
                   {...register("language", { required: true })}
                   placeholder="Book language"
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                  className="w-full  bg-transparent py-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />
                 {errors.language && (
                   <span className="text-red-500">This field is required</span>
@@ -239,9 +239,9 @@ const AdminEditBookPage = () => {
                   Author Name {book?.authors?._id}
                 </label>
                 <select
-                  defaultValue={book?.authors?._id}
+                  defaultValue={book?.authors?._id} disabled
                   {...register("authors", { required: true })}
-                  className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
+                  className="relative z-20 w-full appearance-none bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
                 >
                   <option value="">Select Author Name</option>
                   {allAuthors &&
@@ -264,9 +264,9 @@ const AdminEditBookPage = () => {
                   Genre Name {book?.genres?._id}
                 </label>
                 <select
-                  defaultValue={book?.genres?._id}
+                  defaultValue={book?.genres?._id} disabled
                   {...register("genres", { required: true })}
-                  className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
+                  className="relative z-20 w-full appearance-none bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
                 >
                   <option value="">Select Genre</option>
                   {allGenres &&
@@ -292,38 +292,19 @@ const AdminEditBookPage = () => {
                 {
                    book && book?.imageUrl && ! isRemoveUpload ? (
                     <>
-                    <div className='flex flex-row justify-start items-start gap-4 text-red-600'>
-                      <img src={book?.imageUrl} className='w-20 h-20' />
-                      <button onClick={(e) => {e.preventDefault(); setIsRemoveUpload(true);}}>Remove</button>
-                      </div>
+                        <div className='flex flex-row justify-start items-start gap-4 text-red-600'>
+                            <img src={book?.imageUrl} className='w-20 h-20' />                      
+                        </div>
                     </>
                     
                    ):
                    (
-                      <>
-                          <input
-                            type="file"
-                            {...register("photo", { validate:{
-                              //required: (files) =>  files[0]?.name !== undefined || 'This field is required',
-                              lessThan10MB: (files) => (files[0]?.size > 0 && files[0]?.size < 2097152)  || "Max 2Mb",
-                              acceptedFormats: (files) =>
-                                        ["image/jpeg", "image/png", "image/gif"].includes(
-                                              files[0]?.type
-                                          ) || "Only PNG, JPEG e GIF"
-                            } })}
-                            accept="image/png, image/jpeg, image/gif"
-                            className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent font-medium outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
-                          />
-
-                          
-                          {errors.photo && <span className='text-red-500'>{errors.photo.message}</span>}
+                      <>                          
                       </>
                    )
                 }                
               </div>
-              <button type='submit' className="w-full mt-8 px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
-                  Update
-                </button>
+              
             </div>
           </form>
         </div>
@@ -332,4 +313,4 @@ const AdminEditBookPage = () => {
   )
 }
 
-export default AdminEditBookPage
+export default AdminBooksViewPage

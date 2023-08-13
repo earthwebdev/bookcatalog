@@ -7,7 +7,7 @@ import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { GrNext, GrPrevious } from "react-icons/gr";
-import { successToaster } from "../../../services/toastify.service";
+import { errorToaster, successToaster } from "../../../services/toastify.service";
 
 const AdminBooksListPage = () => {
   const [bookLists, setBookLists] = useState([]);
@@ -46,8 +46,12 @@ const AdminBooksListPage = () => {
     console.log('sssss');
     e.preventDefault();
     console.log(searchQuery);
-    //page = 1; 
-    return navigate(`/admin/books?page=1&sort=${sorting}&s=${searchQuery}`);
+    if(searchQuery === ''){
+       errorToaster('Please enter the search keyword');
+    }else{
+      return navigate(`/admin/books?page=1&sort=${sorting}&s=${searchQuery}`);
+    }
+    //page = 1;     
   } 
   const getBookListDatas = async () => {
     console.log('tested asdfsadfasd' );
@@ -56,7 +60,7 @@ const AdminBooksListPage = () => {
         "/books?limit=2&page=" +
           page +
           (sorting ? `&sort=${sorting}` : `&sort=${sorting}`)+
-          (searchQuery?`&name[regex]=${searchQuery}`: ''),
+          (searchQuery?`&title[regex]=${searchQuery}`: ''),
         jwtToken
       );
       console.log(resp);
@@ -83,6 +87,16 @@ const AdminBooksListPage = () => {
     getBookListDatas();
   }, [page, sorting]);
 
+  //useEffect(() => console.log('num (useEffect) = ', searchQuery), [searchQuery]);
+  const inputHandleChange = (e) => {
+    //console.log(e.target.value, 'search value', e.target.value === '');
+    if( e.target.value === ''){
+      setSearchQuery("")
+    } else{
+      setSearchQuery(e.target.value)
+    }
+    //console.log(searchQuery, 'search value', e.target.value === ''); 
+  }
 
   const deleteBookHandler = async (book) => {
     console.log(book);
@@ -107,11 +121,11 @@ const AdminBooksListPage = () => {
             <input
               className="border-2 rounded-sm border-gray-400 p-2 m-2"
               type="search"
-              onChange={(e) => { console.log(e.target.value); e.target.value == ''?setSearchQuery(''):setSearchQuery(e.target.value)}}
-              defaultValue={searchQuery}
+              onChange={ inputHandleChange }
+              defaultValue={searchQuery}             
               placeholder="Search books"
             />
-            <button onClick={(e) => { e.preventDefault(); console.log('btn clicked'); searchBtnHandler(e);}} className="px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
+            <button disabled={!searchQuery} onClick={(e) => { e.preventDefault(); console.log('btn clicked'); searchBtnHandler(e);}} className="px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
               Search
             </button>
 
@@ -147,7 +161,7 @@ const AdminBooksListPage = () => {
               </div>
               <div className="p-2.5 text-center xl:p-5">
                 <h5 className="text-sm font-medium uppercase xsm:text-base">
-                  Name
+                  Title
                 </h5>
               </div>
               <div className="p-2.5 text-center xl:p-5">
@@ -186,15 +200,15 @@ const AdminBooksListPage = () => {
                         <div className="flex-shrink-0">
                           <img
                             className="w-10 h-10"
-                            src={book?.url}
-                            alt={book?.name}
+                            src={book?.imageUrl}
+                            alt={book?.title}
                           />
                         </div>
                       </div>
 
                       <div className="flex items-center justify-center p-2.5 xl:p-5">
                         <p className="text-black dark:text-white">
-                          {book?.name}
+                          {book?.title}
                         </p>
                       </div>
 

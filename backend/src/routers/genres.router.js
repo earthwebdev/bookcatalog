@@ -10,7 +10,7 @@ import GenreModel from "../models/genres.model.js";
 const router = express.Router();
 
 router.get('/', filteredResults(GenreModel), getGenres);
-router.get('/all', AuthMiddleware, authorize, getAllGenres);
+router.get('/all', getAllGenres);
 router.get('/:id', getGenreById);
 router.post('/', AuthMiddleware, authorize, upload.single('photo'), createGenres);
 router.patch('/:id', AuthMiddleware, authorize, upload.single('photo'), updateGenres);

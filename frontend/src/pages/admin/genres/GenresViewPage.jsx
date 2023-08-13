@@ -114,12 +114,12 @@ const AdminGenresViewPage = () => {
                 <label className="mb-3 block font-medium text-black dark:text-white">
                   Parent Id
                 </label>
-                <select disabled {...register("parentId", { required: false })} className="relative z-20 w-full appearance-none rounded bg-transparent py-3 outline-none transition focus:border-primary ark:border-form-strokedark dark:bg-form-input">
+                <select defaultValue={genre?.parentsId} disabled {...register("parentsId", { required: false })} className="relative z-20 w-full appearance-none rounded bg-transparent py-3 outline-none transition focus:border-primary ark:border-form-strokedark dark:bg-form-input">
                   <option value="">Null</option>
                     {
                        allGenres && allGenres.length > 0 && allGenres.map((allGenre) => {
                          return (
-                          <option defaultValue={genre?.parentId} key={allGenre?._id} value={allGenre?._id}>{allGenre?.name}</option>
+                          <option defaultValue={genre?.parentsId} key={allGenre?._id} value={allGenre?._id}>{allGenre?.name}</option>
                          )
                        })
                     }                    

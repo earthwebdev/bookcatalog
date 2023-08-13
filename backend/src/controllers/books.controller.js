@@ -54,6 +54,8 @@ export const getBooksById = async (req, res) => {
 export const createBooks = async (req, res) => {
     try {
         //console.log(req.fileValidationError);
+        console.log(req.body);
+        //console.log(req.fileValidationError);
         if(req.fileValidationError){
             return res.status(400).json({
                 status: false,
@@ -68,7 +70,7 @@ export const createBooks = async (req, res) => {
             });
         }
 
-        //console.log(req.body);
+        console.log(req.body);
         const {title, description, genres, authors, ISBN, price, stock, discountPercentage, pageCount, weight, language} = req.body;
         if(!title || !description || !genres || !authors || !ISBN || !price || !stock || !pageCount || !weight || !language){
             return res.status(400).json({
@@ -78,7 +80,7 @@ export const createBooks = async (req, res) => {
         }
         let public_id;
         let imageUrl;
-        //console.log(req.file);
+        console.log(req.file);
         if(req?.file?.path){
             //console.log(req?.file?.path);
             try {
@@ -90,10 +92,15 @@ export const createBooks = async (req, res) => {
                 imageUrl = respCloud.secure_url;
             } catch (error) {
                 console.error(error.message);
+                return res.status(400).json({
+                    status: false,
+                    message: error.message
+                });
             }
         }
         //console.log(req.body);
         
+         
         let data = {
             title, description, imageUrl, public_id, genres, authors, ISBN, price, stock, discountPercentage, pageCount, weight, language
         }
@@ -109,13 +116,18 @@ export const createBooks = async (req, res) => {
             }
             console.log("Delete File successfully.");
         });
-       
+        if(!book){
+            return res.status(400).json({
+                status: false,                
+                message: 'Book created failed.'
+            });
+        }
 
         return res.status(200).json({
             status: true,
             data: book,
             message: 'Book created successfully.'
-        }); 
+        });
     } catch (error) {
         return res.status(400).json({
             status: false,

@@ -4,12 +4,12 @@ const Sidebar = () => {
   const location = useLocation()
   const url = location.pathname;
 
-  console.log(location.pathname);
+  //console.log(location.pathname);
   const dashboardActiveCls = url.includes('admin/dashboard')?"bg-gray-100":"";
   const genreActiveCls = url.includes('admin/genres')?"bg-gray-100":"";
   const authorActiveCls = url.includes('admin/authors')?"bg-gray-100":"";
   const bookActiveCls = url.includes('admin/books')?"bg-gray-100":"";
-  console.log(url.includes('admin/genres')?"bg-gray-100":"" )
+  //console.log(url.includes('admin/genres')?"bg-gray-100":"" )
   return (
     <>
       <div className="flex">

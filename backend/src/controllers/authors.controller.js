@@ -18,6 +18,30 @@ export const getAuthors = async (req, res) => {
     }
 }
 
+export const getAllAuthors = async (req, res) => {
+    try {    
+        const authorData = await AuthorModel.find().select('name');
+        //console.log(authorData);
+        if(!authorData){
+            return res.status(400).json({
+                status: false,
+                message: 'Author not found.'
+            }); 
+        }
+
+        return res.status(200).json({
+            status: true,
+            data: authorData,
+            message: 'Author found successfully.'
+        });
+    } catch (error) {
+        return res.status(400).json({
+            status: false,
+            message: error.message,
+        });
+    } 
+}
+
 export const getAuthorById = async (req, res) => {
     try {
         const {id} = req.params;

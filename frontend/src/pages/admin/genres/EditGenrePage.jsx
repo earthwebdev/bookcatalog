@@ -21,7 +21,7 @@ const AdminEditGenrePage = () => {
   console.log(watch("name")); 
   console.log(watch("description")); 
   console.log(watch("photo")); 
-  console.log(watch("parentId"));
+  console.log(watch("parentsId"));
 
   const getAllGenresDatas = async () => {
     //console.log(jwtToken, 'token');
@@ -59,6 +59,8 @@ const AdminEditGenrePage = () => {
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("description", data.description);
+
+    formData.append("parentsId", data.parentsId);
 
     formData.append('isSubmitted', isRemoveUpload);
     if (isRemoveUpload && data.photo[0]) {
@@ -154,7 +156,7 @@ const AdminEditGenrePage = () => {
                 <label className="mb-3 block font-medium text-black dark:text-white">
                   Parent Id
                 </label>
-                <select {...register("parentId", { required: false })} className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input">
+                <select defaultValue={genre?.parentsId} {...register("parentsId", { required: false })} className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input">
                   <option value="">Select Parent Id</option>
                     {
                        allGenres && allGenres.length > 0 && allGenres.map((genre) => {

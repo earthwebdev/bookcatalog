@@ -1,27 +1,33 @@
-import React, { useEffect, useState } from 'react'
-import { getDataWithToken, getDataWithoutToken, postDatasFromAxiosWithToken } from '../../../services/axios.service';
-import { getJWTToken } from '../../../utils/helpers';
-import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
- import {successToaster, errorToaster} from '../../../services/toastify.service'
+import React, { useEffect, useState } from "react";
+import {
+  getDataWithToken,
+  mainPostDatasWithToken,
+} from "../../../services/axios.service";
+import { getJWTToken } from "../../../utils/helpers";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import {
+  successToaster,
+  errorToaster,
+} from "../../../services/toastify.service";
 
-const AdminEditBookPage = () => {
+const AdminCreateBookPage = () => {
   const navigate = useNavigate();
-  const {id} = useParams();
-  console.log(id);
-  const [book, setBook] = useState({});
-  const jwtToken = getJWTToken();
   const [allGenres, setAllGenres] = useState([]);
   const [allAuthors, setAllAuthors] = useState([]);
+  const jwtToken = getJWTToken();
 
-  const [isRemoveUpload, setIsRemoveUpload] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
-  const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
-
-  console.log(watch("name")); 
+    console.log(watch("title")); 
   console.log(watch("description")); 
   console.log(watch("photo")); 
-  console.log(watch("parentId"));
+  //console.log(watch("parentId"));
   const getAllAuthorsDatas = async () => {
     //console.log(jwtToken, 'token');
     const resp = await getDataWithToken("/authors/all", jwtToken);
@@ -42,25 +48,9 @@ const AdminEditBookPage = () => {
     getAllGenresDatas();
     getAllAuthorsDatas();
   }, []);
-  const getBooksById = async (id) => {
-    //console.log('asdfasdfsda');
-    const resp = await getDataWithoutToken('/books/'+id);
-    //console.log(resp)
-    if(resp.status){
-      setBook(resp.data);
-      reset(resp.data);
-    } else {
-      errorToaster(resp.message);
-      return navigate('/admin/books');
-    }
-  }
-
-  useEffect(() => {
-    getBooksById(id);      
-  }, [reset]); 
 
   const onSubmitFormHandle = async (data) => {
-    console.log(data);
+    console.log(jwtToken, data);
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("description", data.description);
@@ -77,25 +67,23 @@ const AdminEditBookPage = () => {
 
     formData.append("genres", data.genres);
 
-    formData.append('isSubmitted', isRemoveUpload);
-    if (isRemoveUpload && data.photo[0]) {
-      formData.append("photo", data.photo[0]);
-    }
-    console.log(data);
+    formData.append("photo", data.photo[0]);
 
-    
-     const resp = await postDatasFromAxiosWithToken('/books/'+id, 'patch' , formData, jwtToken);
+    const resp = await mainPostDatasWithToken(
+      "/books",      
+      formData,
+      jwtToken
+    );
     console.log(resp);
     if(resp.status){
       successToaster(resp.message);
       return navigate('/admin/books');
     } else {
       errorToaster(resp.message);
-    }
-  }
+    } 
+  };
 
   return (
-    
     <div className="flex flex-col gap-4">
       <h2 className="py-2 text-bold text-[20px]">Book Create</h2>
       <div className="rounded-sm border-4 border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -107,7 +95,7 @@ const AdminEditBookPage = () => {
                   Book Title
                 </label>
                 <input
-                  type="text" defaultValue={book?.title}
+                  type="text"
                   {...register("title", { required: true })}
                   placeholder="Book title"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -123,7 +111,7 @@ const AdminEditBookPage = () => {
                 </label>
                 <textarea
                   rows={6}
-                  placeholder="Enter description" defaultValue={book?.description}
+                  placeholder="Enter description"
                   {...register("description", { required: true })}
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 ></textarea>
@@ -136,7 +124,7 @@ const AdminEditBookPage = () => {
                   Book Price
                 </label>
                 <input
-                  type="text"  defaultValue={book?.price}
+                  type="text"
                   {...register("price", { required: true })}
                   placeholder="Book price"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -151,7 +139,7 @@ const AdminEditBookPage = () => {
                   Book Discount Percentage
                 </label>
                 <input
-                  type="text"  defaultValue={book?.discountPercentage}
+                  type="text"
                   {...register("discountPercentage", { required: false })}
                   placeholder="Book discount percentage"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -166,7 +154,7 @@ const AdminEditBookPage = () => {
                   Book Stock
                 </label>
                 <input
-                  type="number" defaultValue={book?.stock}
+                  type="number"
                   {...register("stock", { required: true })}
                   placeholder="Book stock"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -181,7 +169,7 @@ const AdminEditBookPage = () => {
                   Book Page Count
                 </label>
                 <input
-                  type="text" defaultValue={book?.pageCount}
+                  type="text"
                   {...register("pageCount", { required: true })}
                   placeholder="Book page count"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -196,7 +184,7 @@ const AdminEditBookPage = () => {
                   Book Weight(grams)
                 </label>
                 <input
-                  type="text" defaultValue={book?.weight}
+                  type="text"
                   {...register("weight", { required: true })}
                   placeholder="Book weight"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -210,7 +198,7 @@ const AdminEditBookPage = () => {
                   Book ISBN
                 </label>
                 <input
-                  type="text" defaultValue={book?.ISBN}
+                  type="text"
                   {...register("ISBN", { required: true })}
                   placeholder="Book ISBN"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -224,7 +212,7 @@ const AdminEditBookPage = () => {
                   Book Language
                 </label>
                 <input
-                  type="text" defaultValue={book?.language}
+                  type="text"
                   {...register("language", { required: true })}
                   placeholder="Book language"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -236,10 +224,10 @@ const AdminEditBookPage = () => {
 
               <div className="my-4">
                 <label className="mb-3 block font-medium text-black dark:text-white">
-                  Author Name {book?.authors?._id}
+                  Author Name
                 </label>
                 <select
-                  defaultValue={book?.authors?._id}
+                  defaultValue=""
                   {...register("authors", { required: true })}
                   className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
                 >
@@ -261,10 +249,10 @@ const AdminEditBookPage = () => {
 
               <div className="my-4">
                 <label className="mb-3 block font-medium text-black dark:text-white">
-                  Genre Name {book?.genres?._id}
+                  Genre Name
                 </label>
                 <select
-                  defaultValue={book?.genres?._id}
+                  defaultValue=""
                   {...register("genres", { required: true })}
                   className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
                 >
@@ -288,48 +276,41 @@ const AdminEditBookPage = () => {
                 <label className="mb-3 block font-medium text-black dark:text-white">
                   Book Image
                 </label>
-
-                {
-                   book && book?.imageUrl && ! isRemoveUpload ? (
-                    <>
-                    <div className='flex flex-row justify-start items-start gap-4 text-red-600'>
-                      <img src={book?.imageUrl} className='w-20 h-20' />
-                      <button onClick={(e) => {e.preventDefault(); setIsRemoveUpload(true);}}>Remove</button>
-                      </div>
-                    </>
-                    
-                   ):
-                   (
-                      <>
-                          <input
-                            type="file"
-                            {...register("photo", { validate:{
-                              //required: (files) =>  files[0]?.name !== undefined || 'This field is required',
-                              lessThan10MB: (files) => (files[0]?.size > 0 && files[0]?.size < 2097152)  || "Max 2Mb",
-                              acceptedFormats: (files) =>
-                                        ["image/jpeg", "image/png", "image/gif"].includes(
-                                              files[0]?.type
-                                          ) || "Only PNG, JPEG e GIF"
-                            } })}
-                            accept="image/png, image/jpeg, image/gif"
-                            className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent font-medium outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
-                          />
-
-                          
-                          {errors.photo && <span className='text-red-500'>{errors.photo.message}</span>}
-                      </>
-                   )
-                }                
+                <input
+                  type="file"
+                  {...register("photo", {
+                    validate: {
+                      required: (files) =>
+                        files[0]?.name !== undefined ||
+                        "This field is required",
+                      lessThan10MB: (files) =>
+                        (files[0]?.size > 0 && files[0]?.size < 2097152) ||
+                        "Max 2Mb",
+                      acceptedFormats: (files) =>
+                        ["image/jpeg", "image/png", "image/gif"].includes(
+                          files[0]?.type
+                        ) || "Only PNG, JPEG and GIF",
+                    },
+                  })}
+                  accept="image/png, image/jpeg, image/gif"
+                  className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent font-medium outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
+                />
+                {errors.photo && (
+                  <span className="text-red-500">{errors.photo.message}</span>
+                )}
               </div>
-              <button type='submit' className="w-full mt-8 px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
-                  Update
-                </button>
+              <button
+                type="submit"
+                className="w-full mt-8 px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
+              >
+                Create
+              </button>
             </div>
           </form>
         </div>
       </div>
-    </div> 
-  )
-}
+    </div>
+  );
+};
 
-export default AdminEditBookPage
+export default AdminCreateBookPage;

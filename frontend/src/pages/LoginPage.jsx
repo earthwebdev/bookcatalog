@@ -32,7 +32,7 @@ const LoginPage = () => {
           if(isAdmin)
           {
             //console.log('admin');
-            return navigate('/admin_dashboard');
+            return navigate('/admin/dashboard');
           }else{
             return navigate('/dashboard');    
           }            
@@ -81,7 +81,7 @@ const LoginPage = () => {
         //console.log(resp?.roles, 'roles');
         if(resp?.roles === 'admin'){
           //console.log('admin roles ');
-          return navigate("/admin_dashboard");
+          return navigate("/admin/dashboard");
         } else{
           console.log('user roles ');
           return navigate("/dashboard");

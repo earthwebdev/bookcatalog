@@ -21,10 +21,12 @@ const BookSchema = new mongoose.Schema({
     genres:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Genre',
+        required: true
     },
     authors: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Author',
+        required: true
     },
     ISBN: {
         type: String,
@@ -55,8 +57,11 @@ const BookSchema = new mongoose.Schema({
     },
     isFeatured: {
         type: Boolean,
-        default: false,
+        default: false
     }
+},
+{
+    timestamps: true,
 });
 
 const BookModel = mongoose.model('Book', BookSchema);

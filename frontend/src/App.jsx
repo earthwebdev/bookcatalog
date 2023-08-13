@@ -28,6 +28,11 @@ import AdminAuthorsViewPage from './pages/admin/authors/ViewPage';
 
 import AdminCreateAuthorPage from "./pages/admin/authors/CreatePage";
 import AdminEditAuthorPage from "./pages/admin/authors/EditPage";
+//book admin routes
+import AdminbooksListPage from './pages/admin/books/ListPage';
+import AdminCreateBookPage from "./pages/admin/books/CreatePage";
+import AdminEditBookPage from "./pages/admin/books/EditPage";
+import AdminBooksViewPage from './pages/admin/books/viewPage';
 
 import ForgetPasswordPage from "./pages/ForgetPasswordPage";
 import LogoutPage from "./pages/LogoutPage";
@@ -76,7 +81,12 @@ function App() {
                   <Route path="create" element={<AdminCreateAuthorPage />} />
                   <Route index element={<AdminAuthorsListPage />} />
                 </Route>
-            
+                <Route path="books" element=''>
+                  <Route path=":id" element={<AdminBooksViewPage />} /> 
+                  <Route path="edit/:id" element={<AdminEditBookPage />} />
+                  <Route path="create" element={<AdminCreateBookPage />} />
+                  <Route index element={<AdminbooksListPage />} />
+                </Route>
               {/* <Route path='/lectures' element={<LecturesPage />} />
                         <Route path='/lectures/add' element={<AddLecturesPage />} />
                         <Route path='/lectures/:id' element={<EditLecturesPage />} />

@@ -26,7 +26,18 @@ export const postDatasFromAxios = async(url='', posttype=get, data) => {
     return error.response.data;    
   }
 }
-
+export const mainPostDatasWithToken = async(url='', data, token) => {
+  try {
+    //console.log(posttype, 'type', Server_url+url, data);
+    const responseData = await axios.post(Server_url+url, data, {headers: {'Authorization': `Bearer ${token}`}});
+    //console.log(responseData);
+    return responseData.data;
+    
+  } catch (error) {
+    console.log(error.response)
+    return error.response.data;    
+  }
+}
 export const postDatasFromAxiosWithToken = async(url='', posttype=get, data, token) => {
   try {
     //console.log(posttype, 'type', Server_url+url, data);
@@ -35,6 +46,7 @@ export const postDatasFromAxiosWithToken = async(url='', posttype=get, data, tok
     return responseData.data;
     
   } catch (error) {
+    console.log(error.response)
     return error.response.data;    
   }
 }

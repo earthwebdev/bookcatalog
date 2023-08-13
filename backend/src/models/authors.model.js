@@ -21,8 +21,7 @@ const AuthorSchema = new mongoose.Schema({
 },
 {
     timestamps: true,
-}
-);
+});
 
 const AuthorModel = mongoose.model("Author", AuthorSchema);
 export default AuthorModel;

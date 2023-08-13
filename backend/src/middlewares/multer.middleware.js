@@ -13,6 +13,7 @@ const storage = multer.diskStorage({
 
 const fileFilter = (req, file, cb) => {
     let ext = path.extname(file.originalname);
+    //console.log(ext, 'ext files');
     if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
         req.fileValidationError = "Forbidden extension";
         return cb(null, false, req.fileValidationError);
