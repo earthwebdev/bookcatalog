@@ -56,7 +56,7 @@ const AdminCreateBookPage = () => {
     formData.append("description", data.description);
 
     formData.append("price", data.price);
-    formData.append("discountPercentage", data.discountPercentage);
+    formData.append("discountPercentage", data.discountPercentage || 0);
 
     formData.append("stock", data.stock);
     formData.append("pageCount", data.pageCount);
@@ -66,7 +66,7 @@ const AdminCreateBookPage = () => {
     formData.append("authors", data.authors);
 
     formData.append("genres", data.genres);
-
+    formData.append("isFeatured", data.isFeatured);
     formData.append("photo", data.photo[0]);
 
     const resp = await mainPostDatasWithToken(
@@ -298,6 +298,18 @@ const AdminCreateBookPage = () => {
                 {errors.photo && (
                   <span className="text-red-500">{errors.photo.message}</span>
                 )}
+              </div>
+
+              <div className="mb-4">
+                <label className="mb-3 block text-black dark:text-white">
+                  Book Is Featured
+                </label>
+                <input
+                  type="checkbox"
+                  {...register("isFeatured", { required: false })}
+                  placeholder="Book is featured"
+                  className="inline-block rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                /><span className="inline-block ms-4">   True   </span>          
               </div>
               <button
                 type="submit"

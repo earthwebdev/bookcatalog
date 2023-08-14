@@ -85,14 +85,17 @@ const AdminAuthorsListPage = () => {
 
 
   const deleteAuthorHandler = async (author) => {
-    console.log(author);
-    const resp = await deleteDatasFromAxiosWithToken('/authors/'+author?._id, jwtToken);
-    console.log(resp, resp.status);
-    if(resp.status)
-    {
-        successToaster(resp.message);
-        //navigate(`/admin/authors?page=${page}&sort=${sorting}&s=${searchQuery}`);
-        window.location.reload();
+    const shouldRemove = confirm("Are you sure you want to delete?");
+    if(shouldRemove){
+      console.log(author);
+      const resp = await deleteDatasFromAxiosWithToken('/authors/'+author?._id, jwtToken);
+      console.log(resp, resp.status);
+      if(resp.status)
+      {
+          successToaster(resp.message);
+          //navigate(`/admin/authors?page=${page}&sort=${sorting}&s=${searchQuery}`);
+          window.location.reload();
+      }
     }
   }
   

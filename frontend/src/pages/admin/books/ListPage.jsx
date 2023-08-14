@@ -99,15 +99,18 @@ const AdminBooksListPage = () => {
   }
 
   const deleteBookHandler = async (book) => {
-    console.log(book);
-    const resp = await deleteDatasFromAxiosWithToken('/books/'+book?._id, jwtToken);
-    console.log(resp, resp.status);
-    if(resp.status)
-    {
-        successToaster(resp.message);
-        //navigate(`/admin/books?page=${page}&sort=${sorting}&s=${searchQuery}`);
-        window.location.reload();
-    }
+    const shouldRemove = confirm("Are you sure you want to delete?");
+    if(shouldRemove){
+      console.log(book);
+      const resp = await deleteDatasFromAxiosWithToken('/books/'+book?._id, jwtToken);
+      console.log(resp, resp.status);
+      if(resp.status)
+      {
+          successToaster(resp.message);
+          //navigate(`/admin/books?page=${page}&sort=${sorting}&s=${searchQuery}`);
+          window.location.reload();
+      }
+    }    
   }
   
   return (

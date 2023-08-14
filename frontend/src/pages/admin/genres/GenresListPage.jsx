@@ -86,15 +86,18 @@ const AdminGenresListPage = () => {
 
 
   const deleteGenreHandler = async (genre) => {
-    console.log(genre);
-    const resp = await deleteDatasFromAxiosWithToken('/genres/'+genre?._id, jwtToken);
-    console.log(resp, resp.status);
-    if(resp.status)
-    {
-        successToaster(resp.message);
-        //navigate(`/admin/genres?page=${page}&sort=${sorting}&s=${searchQuery}`);
-        window.location.reload();
-    }
+    const shouldRemove = confirm("Are you sure you want to delete?");
+    if(shouldRemove){
+      console.log(genre);
+      const resp = await deleteDatasFromAxiosWithToken('/genres/'+genre?._id, jwtToken);
+      console.log(resp, resp.status);
+      if(resp.status)
+      {
+          successToaster(resp.message);
+          //navigate(`/admin/genres?page=${page}&sort=${sorting}&s=${searchQuery}`);
+          window.location.reload();
+      }
+    }    
   }
   
   return (

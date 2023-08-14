@@ -181,7 +181,7 @@ export const updateGenres = async (req, res) => {
             });
         } */
 
-        //console.log(req.body);
+        console.log(req.body);
         const {name, description, parentsId, isSubmitted} = req.body;
         if(!name || !description){
             return res.status(400).json({
@@ -217,10 +217,18 @@ export const updateGenres = async (req, res) => {
             url = genreData.secure_url;
         }
         //parentsId = parentsId ?? 0;
-        const data = {
-            name, description, url, public_id, parentsId
+        let data;
+        if(parentsId){
+            data = {
+                name, description, url, public_id, parentsId
+            }
+        } else {
+            data = {
+                name, description, url, public_id
+            }
         }
-
+        
+        console.log(data);
         /* const genre =  GenreModel(data);
         await genre.save(); */
         const genre = await  GenreModel.findOneAndUpdate({_id:id}, {$set: data}, {new: true});

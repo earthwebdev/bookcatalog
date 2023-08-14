@@ -60,7 +60,7 @@ const AdminEditGenrePage = () => {
     formData.append("name", data.name);
     formData.append("description", data.description);
 
-    formData.append("parentsId", data.parentsId);
+    formData.append("parentsId", data.parentsId || null);
 
     formData.append('isSubmitted', isRemoveUpload);
     if (isRemoveUpload && data.photo[0]) {

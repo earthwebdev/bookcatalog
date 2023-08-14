@@ -28,7 +28,16 @@ export const getBooksById = async (req, res) => {
             });
         }
         //console.log(id, 'id');
-        const bookData = await BookModel.findById(id).populate('authors','name').populate('genres', 'name');
+       
+        const populates = req.query.populate;
+        //console.log(req.query.populate, ' pupulate', populates);
+        let bookData;
+        if(populates === undefined){
+            bookData = await BookModel.findById(id).populate('authors','name').populate('genres', 'name');            
+        } else {
+            bookData = await BookModel.findById(id);
+        }
+        
         //console.log(bookData);
         if(!bookData){
             return res.status(400).json({
@@ -71,7 +80,7 @@ export const createBooks = async (req, res) => {
         }
 
         console.log(req.body);
-        const {title, description, genres, authors, ISBN, price, stock, discountPercentage, pageCount, weight, language} = req.body;
+        const {title, description, genres, authors, ISBN, price, stock, discountPercentage, pageCount, weight, language, isFeatured} = req.body;
         if(!title || !description || !genres || !authors || !ISBN || !price || !stock || !pageCount || !weight || !language){
             return res.status(400).json({
                 status: false,
@@ -102,11 +111,11 @@ export const createBooks = async (req, res) => {
         
          
         let data = {
-            title, description, imageUrl, public_id, genres, authors, ISBN, price, stock, discountPercentage, pageCount, weight, language
+            title, description, imageUrl, public_id, genres, authors, ISBN, price, stock, discountPercentage, pageCount, weight, language, isFeatured
         }
         /* req.body.url = url;
         req.body.public_id = public_id; */
-        //console.log(data);
+        console.log(data);
         let book = new BookModel(data);
         await book.save();
         
@@ -172,7 +181,7 @@ export const updateBooks = async (req, res) => {
         } */
 
         //console.log(req.body);
-        const {title, description, genres, authors, ISBN, price, stock, discountPercentage, pageCount, weight, language} = req.body;
+        const {title, description, genres, authors, ISBN, price, stock, discountPercentage, pageCount, weight, language, isFeatured} = req.body;
         if(!title || !description || !genres || !authors || !ISBN || !price || !stock || !pageCount || !weight || !language){
             return res.status(400).json({
                 status: false,
@@ -206,7 +215,7 @@ export const updateBooks = async (req, res) => {
             imageUrl = bookData.secure_url;
         }
         let data = {
-            title, description, imageUrl, public_id, genres, authors, ISBN, price, stock, discountPercentage, pageCount, weight, language
+            title, description, imageUrl, public_id, genres, authors, ISBN, price, stock, discountPercentage, pageCount, weight, language, isFeatured
         }
 
         /* const book =  BookModel(data);

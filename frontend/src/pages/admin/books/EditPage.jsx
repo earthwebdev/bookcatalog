@@ -8,8 +8,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 const AdminEditBookPage = () => {
   const navigate = useNavigate();
   const {id} = useParams();
-  console.log(id);
+  //console.log(id);
   const [book, setBook] = useState({});
+  //const [genreId, setGenreId] = useState('');
   const jwtToken = getJWTToken();
   const [allGenres, setAllGenres] = useState([]);
   const [allAuthors, setAllAuthors] = useState([]);
@@ -18,10 +19,11 @@ const AdminEditBookPage = () => {
 
   const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
 
-  console.log(watch("name")); 
+/*   console.log(watch("title")); 
   console.log(watch("description")); 
   console.log(watch("photo")); 
-  console.log(watch("parentId"));
+  console.log(watch("isFeatured")); */
+  //console.log(watch("parentId"));
   const getAllAuthorsDatas = async () => {
     //console.log(jwtToken, 'token');
     const resp = await getDataWithToken("/authors/all", jwtToken);
@@ -44,11 +46,15 @@ const AdminEditBookPage = () => {
   }, []);
   const getBooksById = async (id) => {
     //console.log('asdfasdfsda');
-    const resp = await getDataWithoutToken('/books/'+id);
+    const resp = await getDataWithoutToken('/books/'+id+'?populate=true');
     //console.log(resp)
-    if(resp.status){
+    //console.log(resp.data.genres._id);
+    if(resp.status){     
+      //setValue('value', resp.data);
+ 
       setBook(resp.data);
-      reset(resp.data);
+      //setGenreId(resp.data.genres._id)
+      reset(resp.data);      
     } else {
       errorToaster(resp.message);
       return navigate('/admin/books');
@@ -66,7 +72,7 @@ const AdminEditBookPage = () => {
     formData.append("description", data.description);
 
     formData.append("price", data.price);
-    formData.append("discountPercentage", data.discountPercentage);
+    formData.append("discountPercentage", data.discountPercentage || 0);
 
     formData.append("stock", data.stock);
     formData.append("pageCount", data.pageCount);
@@ -76,7 +82,7 @@ const AdminEditBookPage = () => {
     formData.append("authors", data.authors);
 
     formData.append("genres", data.genres);
-
+    formData.append("isFeatured", data.isFeatured);
     formData.append('isSubmitted', isRemoveUpload);
     if (isRemoveUpload && data.photo[0]) {
       formData.append("photo", data.photo[0]);
@@ -236,11 +242,11 @@ const AdminEditBookPage = () => {
 
               <div className="my-4">
                 <label className="mb-3 block font-medium text-black dark:text-white">
-                  Author Name {book?.authors?._id}
+                  Author Name
                 </label>
-                <select
-                  defaultValue={book?.authors?._id}
+                <select                                   
                   {...register("authors", { required: true })}
+                  defaultValue={book?.authors}                                                                     
                   className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
                 >
                   <option value="">Select Author Name</option>
@@ -261,11 +267,11 @@ const AdminEditBookPage = () => {
 
               <div className="my-4">
                 <label className="mb-3 block font-medium text-black dark:text-white">
-                  Genre Name {book?.genres?._id}
+                  Genre Name      
                 </label>
-                <select
-                  defaultValue={book?.genres?._id}
+                <select                  
                   {...register("genres", { required: true })}
+                  defaultValue={book?.genres}           
                   className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
                 >
                   <option value="">Select Genre</option>
@@ -273,7 +279,7 @@ const AdminEditBookPage = () => {
                     allGenres.length > 0 &&
                     allGenres.map((genre) => {
                       return (
-                        <option key={genre?._id} value={genre?._id}>
+                        <option key={genre?._id} value={genre?._id.toString()}>
                           {genre?.name}
                         </option>
                       );
@@ -320,6 +326,19 @@ const AdminEditBookPage = () => {
                       </>
                    )
                 }                
+              </div>
+
+              <div className="mb-4">
+                <label className="mb-3 block text-black dark:text-white">
+                  Book Is Featured
+                </label>
+                <input
+                  type="checkbox" defaultValue={book?.isFeatured}
+                  {...register("isFeatured", { required: false })}
+                  placeholder="Book is featured"
+                  value='true'
+                  className="inline-block rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                /><span className="inline-block ms-4">   True   </span>          
               </div>
               <button type='submit' className="w-full mt-8 px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600">
                   Update
