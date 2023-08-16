@@ -19,6 +19,47 @@ export const getReviews = async (req, res) => {
     }
 }
 
+export const getReviewById = async (req, res) => {
+    try {
+        const {id} = req.params;
+        if(! mongoose.Types.ObjectId.isValid(id)){
+            return res.status(400).json({
+                status: false,
+                message: 'Review not found.'
+            });
+        }
+        //console.log(id, 'id');
+        const populates = req.query.populate;
+        //console.log(req.query.populate, ' pupulate', populates);
+        let reviewData;
+        if(populates === undefined){
+            reviewData = await ReviewModel.findById(id).populate('bookId','title').populate('userId', 'name');            
+        } else {
+            reviewData = await ReviewModel.findById(id);
+        }
+        
+        //console.log(bookData);
+        if(!reviewData){
+            return res.status(400).json({
+                status: false,
+                message: 'Review not found.'
+            }); 
+        }
+
+        return res.status(200).json({
+            status: true,
+            data: reviewData,
+            message: 'Review found successfully.'
+        });
+    } catch (error) {
+        return res.status(400).json({
+            status: false,
+            message: error.message,
+        });
+    } 
+
+}
+
 export const getReviewsByBookId = async (req, res) => {
     try {
         const {bookId} = req.params;
@@ -63,9 +104,9 @@ export const getReviewsByBookId = async (req, res) => {
 export const createReviews = async (req, res) => {
     try {
 
-        //console.log(req.body);
-        const {title, description, rating, url, bookId} = req.body;
-        if(!title || !description || !rating || !bookId ){
+        console.log(req.body);
+        const {title, description, rating, url, bookId, status} = req.body;
+        if(!title || !description || !rating || !bookId || !status ){
             return res.status(400).json({
                 status: false,
                 message: 'Please enter title, description, rating and bookId.'
@@ -91,7 +132,7 @@ export const createReviews = async (req, res) => {
         //console.log(req.body);
         const userId = req.user.id
         let data = {
-            title, description, rating, url, bookId, userId
+            title, description, rating, url, bookId, userId, status
         }
        
         //console.log(data);
@@ -133,7 +174,7 @@ export const updateReviews = async (req, res) => {
         }
 
         //console.log(req.body);
-        const {title, description, rating, url, bookId} = req.body;
+        const {title, description, rating, url, bookId, status} = req.body;
         if(!title || !description || !rating || !bookId ){
             return res.status(400).json({
                 status: false,
@@ -160,7 +201,7 @@ export const updateReviews = async (req, res) => {
         //console.log(req.body);
         const userId = req.user.id
         let data = {
-            title, description, rating, url, bookId
+            title, description, rating, url, bookId, status
         }
         console.log(userId, ' === ', reviewUserId.toString());
         if(reviewUserId === '' || (reviewUserId.toString() !== userId && req.user.roles === 'user') ){

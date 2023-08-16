@@ -16,7 +16,6 @@ const AdminEditGenrePage = () => {
   const [isRemoveUpload, setIsRemoveUpload] = useState(false);
 
   const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
-  const onSubmit = data => console.log(data);
 
   console.log(watch("name")); 
   console.log(watch("description")); 

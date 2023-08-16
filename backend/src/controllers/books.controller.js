@@ -18,6 +18,30 @@ export const getBooks = async (req, res) => {
     }
 }
 
+export const getAllBooks = async (req, res) => {
+    try {    
+        const bookData = await BookModel.find().select('title');
+        //console.log(bookData);
+        if(!bookData){
+            return res.status(400).json({
+                status: false,
+                message: 'Book not found.'
+            }); 
+        }
+
+        return res.status(200).json({
+            status: true,
+            data: bookData,
+            message: 'Book found successfully.'
+        });
+    } catch (error) {
+        return res.status(400).json({
+            status: false,
+            message: error.message,
+        });
+    } 
+}
+
 export const getBooksById = async (req, res) => {
     try {
         const {id} = req.params;

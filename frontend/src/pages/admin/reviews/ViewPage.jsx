@@ -1,0 +1,161 @@
+import React, { useEffect, useState } from 'react'
+import { getDataWithToken, getDataWithoutToken, postDatasFromAxiosWithToken } from '../../../services/axios.service';
+import { getJWTToken } from '../../../utils/helpers';
+import { useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
+ import { errorToaster} from '../../../services/toastify.service'
+
+const AdminReviewsViewPage = () => {
+  const navigate = useNavigate();
+  const {id} = useParams();
+  console.log(id);
+  //const [allAuthors, setAllAuthor] = useState([]);
+  const [review, setReview] = useState({});
+  const jwtToken = getJWTToken();
+
+  const [isRemoveUpload, setIsRemoveUpload] = useState(false);
+
+  const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
+
+
+  /* const getAllAuthorsDatas = async () => {
+    //console.log(jwtToken, 'token');
+    const resp = await getDataWithToken('/authors/all', jwtToken);
+    console.log(resp)
+    if(resp.status){
+       setAllAuthor(resp.data);
+    }
+  } */
+
+  const getReviewsById = async (id) => {
+    //console.log('asdfasdfsda');
+    const resp = await getDataWithoutToken('/reviews/'+id);
+    console.log(resp);
+    if(resp.status){
+      setReview(resp.data);
+      reset(resp.data);
+    } else {
+      errorToaster(resp.message);
+      return navigate('/admin/reviews');
+    } 
+  }
+
+  useEffect(() => {
+    getReviewsById(id);      
+  }, [reset]); 
+
+  /* useEffect(() => {
+      getAllAuthorsDatas();
+      
+  }, []); */
+
+
+  return (
+    <div className="flex flex-col gap-4">
+        <h2 className="py-2 text-bold text-[20px]">Review View</h2>
+        <div className="rounded-sm border-4 border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+          <div className="mb-6 text-xl font-semibold text-black dark:text-white">
+          
+          <div className="flex flex-col gap-5.5 p-6.5">
+              <div className='mb-4'>
+                <label className="mb-3 block text-black dark:text-white">
+                  Title
+                </label>
+                <input
+                  type="text"
+                  defaultValue={review?.title}
+                  {...register("title", { required: true })}
+                  placeholder="Review Title"
+                  disabled
+                  className="w-full rounded-lg bg-transparent py-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                />
+               
+              </div>
+
+              <div className='my-4'>
+                <label className="mb-3 block text-black dark:text-white">
+                Description
+                </label>
+                <textarea
+                  rows={6}
+                  placeholder="enter description"
+                  defaultValue={review?.description}
+                  disabled
+                  {...register("description", { required: true })}
+                  className="w-full rounded-lg bg-transparent py-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                ></textarea>
+                {errors.description && <span className='text-red-500'>This field is required</span>}
+              </div>
+
+              <div className='mb-4'>
+                <label className="mb-3 block text-black dark:text-white">
+                  Review Rating
+                </label>
+                <input
+                  type="text"
+                  defaultValue={review?.rating}
+                  {...register("rating", { required: true })}
+                  placeholder="Review Rating"
+                  disabled
+                  className="w-full rounded-lg bg-transparent py-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                />
+               
+              </div>
+
+              <div className='mb-4'>
+                <label className="mb-3 block text-black dark:text-white">
+                  Review Book Title 
+                </label>
+                {review?.bookId?.title}
+               
+              </div>
+
+              <div className='mb-4'>
+                <label className="mb-3 block text-black dark:text-white">
+                  Review User Name
+                </label>
+                {review?.userId?.name}
+               
+              </div>
+
+              <div className='mb-4'>
+                <label className="mb-3 block text-black dark:text-white">
+                  Status
+                </label>
+                <input
+                  type="text"
+                  defaultValue={review?.status}
+                  {...register("status", { required: true })}
+                  placeholder="Review Status"
+                  disabled
+                  className="w-full rounded-lg bg-transparent py-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                />
+               
+              </div>
+              
+              {/* <div className='my-4'>
+                <label className="mb-3 block font-medium text-black dark:text-white">
+                  Parent Id
+                </label>
+                <select disabled {...register("parentId", { required: false })} className="relative z-20 w-full appearance-none rounded bg-transparent py-3 outline-none transition focus:border-primary ark:border-form-strokedark dark:bg-form-input">
+                  <option value="">Null</option>
+                    {
+                       allAuthors && allAuthors.length > 0 && allAuthors.map((allAuthor) => {
+                         return (
+                          <option defaultValue={author?.parentId} key={allAuthor?._id} value={allAuthor?._id}>{allAuthor?.name}</option>
+                         )
+                       })
+                    }                    
+                  </select>
+              </div> */}
+             
+            </div>
+          
+
+          </div>
+          </div>
+    </div>    
+  )
+}
+
+export default AdminReviewsViewPage
