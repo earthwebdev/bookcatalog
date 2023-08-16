@@ -6,11 +6,12 @@ import CardTypeFeaturedSlider from './CardTypeFeaturedSlider';
 import Carousel from 'react-grid-carousel'
 import { getDataWithoutToken } from '../services/axios.service';
 
-const FeaturedBooks = () => {
+const FeaturedBooks = ({pagelimits}) => {
+    console.log(pagelimits);
     const [bookLists, setBookLists] = useState([]);
     const getFeaturedBooksList = async() => {
       try {
-        const resp = await getDataWithoutToken("/books?isFeatured[eq]=1&limit=10");
+        const resp = await getDataWithoutToken("/books?isFeatured[eq]=1&limit="+pagelimits);
         //console.log(resp);
         if(resp.status){
             setBookLists(resp.data)

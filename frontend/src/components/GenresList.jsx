@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Carousel from 'react-grid-carousel'
 
 
-const GenresList = () => {
+const GenresList = ({pagelimits}) => {
     const [genreLists, setGenreLists] = useState([]);
     useEffect(() => {
         setGenreLists(

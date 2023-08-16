@@ -38,6 +38,10 @@ import AdminreviewsListPage from './pages/admin/reviews/listPage';
 import AdminCreateReviewPage from './pages/admin/reviews/CreatePage';
 import AdminEditReviewPage   from "./pages/admin/reviews/EditPage";
 import AdminReviewsViewPage  from "./pages/admin/reviews/ViewPage";
+//setting admin routes 
+import AdminSettingsListPage from "./pages/admin/settings/ListPage";
+import AdminCreateSettingPage from './pages/admin/settings/CreatePage';
+import AdminEditSettingPage from './pages/admin/settings/EditPage';
 
 import ForgetPasswordPage from "./pages/ForgetPasswordPage";
 import LogoutPage from "./pages/LogoutPage";
@@ -97,6 +101,13 @@ function App() {
                   <Route path="edit/:id" element={<AdminEditReviewPage   />} />
                   <Route path="create" element={<AdminCreateReviewPage />} /> 
                   <Route index element={<AdminreviewsListPage />} />
+                </Route>
+
+                <Route path="settings" element=''>
+                  {/* <Route path=":id" element={<AdminReviewsViewPage />} />*/} 
+                  <Route path="edit/:id" element={<AdminEditSettingPage   />} />
+                  <Route path="create" element={<AdminCreateSettingPage />} /> 
+                  <Route index element={<AdminSettingsListPage />} />
                 </Route>
                 
               {/* <Route path='/lectures' element={<LecturesPage />} />

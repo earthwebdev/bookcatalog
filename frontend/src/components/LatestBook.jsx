@@ -6,11 +6,11 @@ import CardTypeLatestSlider from './CardTypeLatestSlider';
 import Carousel from 'react-grid-carousel'
 import { getDataWithoutToken } from '../services/axios.service';
 
-const LatestBookComp = () => {
+const LatestBookComp = ({pagelimits}) => {
     const [bookLists, setBookLists] = useState([]);
     const getLatestBooksList = async() => {
       try {
-        const resp = await getDataWithoutToken("/books?limit=20");
+        const resp = await getDataWithoutToken("/books?limit="+pagelimits);
         console.log(resp);
         if(resp.status){
             setBookLists(resp.data)

@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Carousel from "react-grid-carousel";
 import CardTypeTestimonials from "./CardTypeTestimonials";
-const Testimonials = () => {
+const Testimonials = ({pagelimits}) => {
   const [testimonials, setTestimonials] = useState([]);
   useEffect(() => {
     setTestimonials([

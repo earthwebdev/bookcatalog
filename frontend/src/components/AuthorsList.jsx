@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Carousel from 'react-grid-carousel'
 
 
-const AuthorsList = () => {
+const AuthorsList = ({pagelimits}) => {
     const [authorLists, setAuthorLists] = useState([]);
     useEffect(() => {
         setAuthorLists(

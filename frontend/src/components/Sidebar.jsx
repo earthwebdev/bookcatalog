@@ -10,6 +10,7 @@ const Sidebar = () => {
   const authorActiveCls = url.includes('admin/authors')?"bg-gray-100":"";
   const bookActiveCls = url.includes('admin/books')?"bg-gray-100":"";
   const reviewActiveCls = url.includes('admin/reviews')?"bg-gray-100":"";
+  const settingActiveCls = url.includes('admin/settings')?"bg-gray-100":"";
   
   //console.log(url.includes('admin/genres')?"bg-gray-100":"" )
   return (
@@ -82,10 +83,7 @@ style={{ "enableBackground":"new 0 0 117.37 122.88" }}>
                 </li>
                 
                 <li>
-                  <a
-                    className="flex items-center px-4 py-2 mt-5 text-gray-600 rounded-md hover:bg-gray-200"
-                    href="#"
-                  >
+                <Link className={`flex items-center px-4 py-2 mt-5 text-gray-600 rounded-md hover:bg-gray-200 ${settingActiveCls}` } to={'/admin/settings'}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="w-6 h-6"
@@ -108,7 +106,7 @@ style={{ "enableBackground":"new 0 0 117.37 122.88" }}>
                     </svg>
 
                     <span className="mx-4 font-medium">Settings</span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </aside>
