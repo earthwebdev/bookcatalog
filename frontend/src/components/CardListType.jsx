@@ -12,11 +12,11 @@ const CardListType = (props) => {
         <div className="p-5">
           <a href={hrefLink}>
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              {title}{" "}
+              {title?.length > 18?title.slice(0,18)+'...':title}
             </h5>
           </a>
           <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-            {description}
+          {description?.length > 30?description.slice(0,30)+'...':description}
           </p>
           <a
             href={hrefLink}

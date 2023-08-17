@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { getDataWithoutToken } from '../services/axios.service';
 import CardListType from '../components/CardListType';
 import {GrPrevious,  GrNext } from 'react-icons/gr';
-
+import SettingUtil from '../utils/settings';
 const GenreDetailsPage = () => {
     const [genre, setGenre] = useState({});
     const [status, setStatus] = useState(false);
@@ -23,7 +23,21 @@ const GenreDetailsPage = () => {
     const query = new URLSearchParams(useLocation().search);
     const page = query.get("page") || 1;
     
-    console.log(page);
+    const [setting, setSetting] = useState([]);
+    const getAllSettings = async () => {
+      const settingData = await SettingUtil();
+      //console.log(settingData);
+      setSetting(settingData);
+    }
+    useEffect(() => {
+      getAllSettings();
+      setting.pagelimits = setting?.pagelimits === undefined?10:setting?.pagelimits;
+      //console.log(setting.pagelimits);
+      if(setting?.pagelimits > 0){
+        getBookListByGenreId(id);
+      }
+    }, [id, page, setting.pagelimits]);
+    //console.log(page);
 
     const getGenreDetailById = async (id) => {
         console.log(id);
@@ -40,7 +54,7 @@ const GenreDetailsPage = () => {
     }
     const getBookListByGenreId = async (id) => {
         try {
-            const resp = await getDataWithoutToken('/books?limit=1&genres='+id+'&page='+page);
+            const resp = await getDataWithoutToken('/books?limit='+setting.pagelimits+'&genres='+id+'&page='+page);
             console.log(resp);
             setBookLists(resp.data);
             setPagination(resp.pagination);
@@ -53,7 +67,7 @@ const GenreDetailsPage = () => {
     }
     useEffect(() => {
         getGenreDetailById(id);
-        getBookListByGenreId(id);
+        //getBookListByGenreId(id);
     }, [id, page])
   return (
     <MainLayout>

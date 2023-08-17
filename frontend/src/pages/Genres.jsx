@@ -7,18 +7,25 @@ import CardListType from '../components/CardListType';
 import {GrPrevious,  GrNext } from 'react-icons/gr';
 import { Link } from "react-router-dom";
 
+import SettingUtil from '../utils/settings';
 const GenresPage = () => {
     const [genreLists, setGenreLists] = useState([]);
     const [pagination, setPagintaion] = useState({});
     const reqs = useParams();
     const query = new URLSearchParams(useLocation().search);
     const page = query.get("page");
+    const [setting, setSetting] = useState([]);
+    const getAllSettings = async () => {
+      const settingData = await SettingUtil();
+      //console.log(settingData);
+      setSetting(settingData);
+    }
     const getGenresPageLists = async() => {
         //console.log('tested' + page);
         try {
             
             //console.log(reqs);
-            const resp = await getDataWithoutToken("/genres?limit=2&page="+page);
+            const resp = await getDataWithoutToken("/genres?limit="+setting.pagelimits+"&page="+page);
             //console.log(resp);
             if(resp.status){
                 setGenreLists(resp.data);
@@ -28,9 +35,18 @@ const GenresPage = () => {
             console.log(error.message);
           }
     }
+
     useEffect(() => {
+      getAllSettings();
+      setting.pagelimits = setting?.pagelimits === undefined?10:setting?.pagelimits;
+      //console.log(setting.pagelimits);
+      if(setting?.pagelimits > 0){
+        getGenresPageLists();
+      }
+    }, [page, setting.pagelimits]);
+    /* useEffect(() => {
         getGenresPageLists();      
-    }, [page]);
+    }, [page]); */
   return (
     <MainLayout>
         <div className="container mx-auto text-white text-center py-6">

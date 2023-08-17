@@ -13,6 +13,12 @@ export const getRole = () => {
     return role;
 }
 
+export const getName = (state) => 
+{
+    const { name } = useSelector((state) => state.auth);
+    return name;
+}
+
 export const getRoleAccess = (data) => {
     const { role } = useSelector((state) => state.auth);
     if(data === role)

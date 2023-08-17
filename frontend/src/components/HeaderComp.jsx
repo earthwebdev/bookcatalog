@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { BiCart, BiSearch, BiUser } from "react-icons/bi";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getLoggedIn, getRoleAccess, getName } from '../utils/helpers';
 const HeaderComp = () => {
-  const [query, setQuery] = useState("");
-  const isLogin = useSelector((state) => state.auth.isLoggedIn);
-  const name = useSelector((state) => state.auth.name);
-
+  const [query, setQuery] = useState("");   
+  const isLogin = getLoggedIn();
+  const name = getName();
+  const isAdmin = getRoleAccess('admin');
   const searchHandle = (event) => {
     event?.preventDefault();
     router.push(`/search?query=${query}`);
@@ -89,7 +89,7 @@ const HeaderComp = () => {
                       ></path>
                     </svg>
                   </div>
-                  <Link to={'/dashboard'}>{name}</Link>
+                  <Link to={isAdmin ?'/admin/dashboard':'/dashboard'}>{name}</Link>
                   <Link to={'/logout'}>Logout</Link>
                 
 
