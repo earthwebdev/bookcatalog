@@ -1,0 +1,15 @@
+#Docker File for node js js application
+FROM node:18-alpine
+
+#working directory of our application
+WORKDIR /usr/username/src
+
+COPY package*.json ./
+
+RUN pnpm install --silent
+
+COPY .  .
+
+EXPOSE 8085
+
+CMD ["pnpm", "start"]
