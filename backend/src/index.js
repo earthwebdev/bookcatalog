@@ -3,7 +3,7 @@ import "dotenv/config"
 
 import morgan from "morgan";
 //router parts
-import indexRouter from "./routers/index.router.js";
+import indexRouter from "./routes/index.router.js";
 
 import dbConnection from "./config/db.config.js";
 
