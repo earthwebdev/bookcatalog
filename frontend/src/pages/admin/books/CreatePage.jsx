@@ -67,7 +67,7 @@ const AdminCreateBookPage = () => {
 
     formData.append("genres", data.genres);
     formData.append("isFeatured", data.isFeatured);
-    formData.append("photo", data.photo[0]);
+    formData.append("imageUrl", data.photo[0]);
 
     const resp = await mainPostDatasWithToken(
       "/books",      

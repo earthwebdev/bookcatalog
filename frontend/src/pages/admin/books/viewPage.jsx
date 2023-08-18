@@ -79,7 +79,7 @@ const AdminBooksViewPage = () => {
 
     formData.append('isSubmitted', isRemoveUpload);
     if (isRemoveUpload && data.photo[0]) {
-      formData.append("photo", data.photo[0]);
+      formData.append("imageUrl", data.photo[0]);
     }
     console.log(data);
 

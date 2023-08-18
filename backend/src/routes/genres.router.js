@@ -32,6 +32,9 @@ const router = express.Router();
  *           type: string
  *           format: binary
  *           description: The genre photo url
+ *         parentId:
+ *           type: string
+ *           description: The parent id of the genre
  *         createdAt:
  *           type: string
  *           format: date
