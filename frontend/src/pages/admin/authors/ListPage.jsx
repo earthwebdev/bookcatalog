@@ -189,7 +189,7 @@ const AdminAuthorsListPage = () => {
                         <div className="flex-shrink-0">
                           <img
                             className="w-10 h-10"
-                            src={author?.url}
+                            src={author?.photo}
                             alt={author?.name}
                           />
                         </div>

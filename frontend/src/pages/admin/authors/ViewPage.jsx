@@ -92,10 +92,10 @@ const AdminAuthorsViewPage = () => {
                   Image
                 </label>
                 {
-                   author && author?.url && ! isRemoveUpload ? (
+                   author && author?.photo && ! isRemoveUpload ? (
                     <>
                     <div className='flex flex-row justify-start items-start gap-4 text-red-600'>
-                      <img src={author?.url} className='w-20 h-20' />
+                      <img src={author?.photo} className='w-20 h-20' />
                       
                       </div>
                     </>

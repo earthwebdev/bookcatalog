@@ -99,7 +99,7 @@ export const createGenres = async (req, res) => {
             });
         }
         let public_id;
-        let url;
+        let photo;
         //console.log(req.file);
         if(req?.file?.path){
             //console.log(req?.file?.path);
@@ -109,7 +109,7 @@ export const createGenres = async (req, res) => {
                 
                 //console.log(respCloud);
                 public_id = respCloud.public_id;
-                url = respCloud.secure_url;
+                photo = respCloud.secure_url;
             } catch (error) {
                 console.error(error.message);
             }
@@ -117,9 +117,9 @@ export const createGenres = async (req, res) => {
         //console.log(req.body);
         //parentsId = parentsId ?? null;
         let data = {
-            name, description, url, public_id, parentsId
+            name, description, photo, public_id, parentsId
         }
-        /* req.body.url = url;
+        /* req.body.photo = photo;
         req.body.public_id = public_id; */
         //console.log(data);
         let genre = new GenreModel(data);
@@ -190,7 +190,7 @@ export const updateGenres = async (req, res) => {
             });
         }
         let public_id;
-        let url;
+        let photo;
         //console.log(isSubmitted, ' == ', req.file );
         if(isSubmitted && req.file ){
             try {
@@ -199,7 +199,7 @@ export const updateGenres = async (req, res) => {
 
                 //console.log(respCloud);
                 public_id = respCloud.public_id;
-                url = respCloud.secure_url;
+                photo = respCloud.secure_url;
 
                 if(genreData?.public_id){
                     try {
@@ -214,17 +214,17 @@ export const updateGenres = async (req, res) => {
             }
         } else {
             public_id = genreData.public_id;
-            url = genreData.secure_url;
+            photo = genreData.secure_url;
         }
         //parentsId = parentsId ?? 0;
         let data;
         if(parentsId){
             data = {
-                name, description, url, public_id, parentsId
+                name, description, photo, public_id, parentsId
             }
         } else {
             data = {
-                name, description, url, public_id
+                name, description, photo, public_id
             }
         }
         
@@ -272,7 +272,7 @@ export const deleteGenres = async (req, res) => {
         
         if(genreData?.public_id){
             try {
-                //console.log(genreData?.public_id, genreData.url);                
+                //console.log(genreData?.public_id, genreData.photo);                
                 // delete the image
                 await cloudinary.v2.uploader.destroy(genreData?.public_id, function(error,result) {
                     console.log(result, error) }) 

@@ -3,11 +3,11 @@ import UserModel from "../models/users.model.js";
 
 export const AuthMiddleware = async (req, res, next) => {
     //console.log(req.headers);
-    if(req.headers.authorization.startsWith('Bearer')){
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         const token = req.headers.authorization.split(' ')[1];
         //console.log(token);
         const secretKey = process.env.JWT_SECRT_KEY;
-        const id = jsonwebtoken.verify(token, secretKey, function(err, decoded) {
+        const id = jsonwebtoken.verify(token, secretKey, function(err, decoded) {            
             if(err){
                 return res.status(400).json({
                     status: false,
@@ -19,6 +19,11 @@ export const AuthMiddleware = async (req, res, next) => {
         const user = await UserModel.findById(id).select('-password');
         req.user = user;
         next();
+    }else{
+        return res.status(401).json({
+            status: false,                
+            message: 'You are not authorized to access this resource.'
+        });
     }
 }
 

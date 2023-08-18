@@ -101,7 +101,7 @@ export const createAuthors = async (req, res) => {
             });
         }
         let public_id;
-        let url;
+        let photo;
         //console.log(req.file);
         if(req?.file?.path){
             //console.log(req?.file?.path);
@@ -111,7 +111,7 @@ export const createAuthors = async (req, res) => {
                 
                 //console.log(respCloud);
                 public_id = respCloud.public_id;
-                url = respCloud.secure_url;
+                photo = respCloud.secure_url;
             } catch (error) {
                 console.error(error.message);
             }
@@ -119,9 +119,9 @@ export const createAuthors = async (req, res) => {
         //console.log(req.body);
         
         let data = {
-            name, description, url, public_id
+            name, description, photo, public_id
         }
-        /* req.body.url = url;
+        /* req.body.photo = photo;
         req.body.public_id = public_id; */
         //console.log(data);
         let author = new AuthorModel(data);
@@ -192,7 +192,7 @@ export const updateAuthors = async (req, res) => {
             });
         }
         let public_id;
-        let url;
+        let photo;
         if(req.file){
             try {
                 // Upload the image
@@ -200,7 +200,7 @@ export const updateAuthors = async (req, res) => {
 
                 //console.log(respCloud);
                 public_id = respCloud.public_id;
-                url = respCloud.secure_url;
+                photo = respCloud.secure_url;
 
                 if(authorData?.public_id){
                     try {
@@ -215,10 +215,10 @@ export const updateAuthors = async (req, res) => {
             }
         } else {
             public_id = authorData.public_id;
-            url = authorData.secure_url;
+            photo = authorData.secure_url;
         }
         const data = {
-            name, description, url, public_id
+            name, description, photo, public_id
         }
 
         /* const author =  AuthorModel(data);
@@ -264,7 +264,7 @@ export const deleteAuthors = async (req, res) => {
         
         if(authorData?.public_id){
             try {
-                //console.log(authorData?.public_id, authorData.url);                
+                //console.log(authorData?.public_id, authorData.photo);                
                 // delete the image
                 await cloudinary.v2.uploader.destroy(authorData?.public_id, function(error,result) {
                     console.log(result, error) }) 

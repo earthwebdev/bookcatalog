@@ -11,7 +11,7 @@ const AuthorSchema = new mongoose.Schema({
         required: true,
         minLength: [10, 'Name should be more than 10 characters'],
     },
-    url:{
+    photo:{
         type: String,
         required: true,
     },

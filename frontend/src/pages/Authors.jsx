@@ -63,7 +63,7 @@ const AuthorsPage = () => {
                 const datas = {
                   title: author.name,
                   description: author.description,
-                  image: author.url,
+                  image: author.photo,
                   hrefLink: `/authors/${author._id}`
                 }
                 

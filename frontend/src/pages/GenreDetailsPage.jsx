@@ -75,7 +75,7 @@ const GenreDetailsPage = () => {
             {
                 genre && status ? (<>
                         
-                            <div><img src={genre.url} alt={genre.name} /></div>
+                            <div><img src={genre.photo} alt={genre.name} /></div>
                             <div>{genre.name}</div>
                             <div>{genre.description}</div>
                     </>): 

@@ -58,7 +58,7 @@ const GenresPage = () => {
                 const datas = {
                   title: genre.name,
                   description: genre.description,
-                  image: genre.url,
+                  image: genre.photo,
                   hrefLink: `/genres/${genre._id}`
                 }
                 

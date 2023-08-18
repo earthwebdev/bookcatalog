@@ -118,10 +118,10 @@ const AdminEditGenrePage = () => {
                   Genre Image
                 </label>
                 {
-                   genre && genre?.url && ! isRemoveUpload ? (
+                   genre && genre?.photo && ! isRemoveUpload ? (
                     <>
                     <div className='flex flex-row justify-start items-start gap-4 text-red-600'>
-                      <img src={genre?.url} className='w-20 h-20' />
+                      <img src={genre?.photo} className='w-20 h-20' />
                       <button onClick={(e) => {e.preventDefault(); setIsRemoveUpload(true);}}>Remove</button>
                       </div>
                     </>

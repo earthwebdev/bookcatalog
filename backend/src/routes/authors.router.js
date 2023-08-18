@@ -15,32 +15,139 @@ const router = express.Router();
  *     Author:
  *       type: object
  *       required:
- *         - title
- *         - author
- *         - finished
+ *         - name
+ *         - description         
  *       properties:
  *         id:
  *           type: string
- *           description: The auto-generated id of the book
- *         title:
+ *           description: The auto-generated id of the author
+ *         name:
  *           type: string
- *           description: The title of your book
- *         author:
+ *           description: The name of your author
+ *         description:
  *           type: string
- *           description: The book author
- *         finished:
- *           type: boolean
- *           description: Whether you have finished reading the book
+ *           description: The book author description
+ *         photo:
+ *           type: string
+ *           format: binary
+ *           description: The author photo url
  *         createdAt:
  *           type: string
  *           format: date
- *           description: The date the book was added
+ *           description: The date of author was added
  *       example:
  *         id: d5fE_asz
- *         title: The New Turing Omnibus
- *         author: Alexander K. Dewdney
- *         finished: false
- *         createdAt: 2020-03-10T04:05:06.157Z
+ *         name: The New Turing Omnibus
+ *         description: description of the author
+ *         photo: 'http://example.com/examples/example.jpg'
+ *         createdAt: 2023-03-10T04:05:06.157Z
+ */
+
+ /**
+ * @swagger
+ * tags:
+ *   name: Authors
+ *   description: The books managing API
+ * /authors:
+ *   get:
+ *     summary: Lists all the authors
+ *     tags: [Authors]
+ *     responses:
+ *       200:
+ *         description: The list of the authors
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Author'
+ *   post:
+ *     summary: Create a new author
+ *     tags: [Authors]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             $ref: '#/components/schemas/Author'
+ *     responses:
+ *       200:
+ *         description: The created author.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Author'
+ *       500:
+ *         description: Some server error
+ *       401:
+ *         description: You are not authorized to access this resource.
+ * /authors/{id}:
+ *   get:
+ *     summary: Get the author by id
+ *     tags: [Authors]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The author id
+ *     responses:
+ *       200:
+ *         description: The author response by id
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Author'
+ *       404:
+ *         description: The author was not found
+ *   patch:
+ *    summary: Update the author by the id
+ *    tags: [Authors]
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: The author id
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        multipart/form-data:
+ *          schema:
+ *            $ref: '#/components/schemas/Author'
+ *    responses:
+ *      200:
+ *        description: The author was updated
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Author'
+ *      404:
+ *        description: The author was not found
+ *      401:
+ *         description: You are not authorized to access this resource.
+ *      500:
+ *        description: Some error happened
+ *   delete:
+ *     summary: Remove the author by id
+ *     tags: [Authors]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The author id
+ *
+ *     responses:
+ *       200:
+ *         description: The author was deleted
+ *       404:
+ *         description: The author was not found
+ *       401:
+ *         description: You are not authorized to access this resource.
  */
 router.get('/', filteredResults(AuthorModel), getAuthors);
 router.get('/all', getAllAuthors);

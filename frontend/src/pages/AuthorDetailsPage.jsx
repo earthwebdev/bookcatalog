@@ -73,7 +73,7 @@ const AuthorDetailsPage = () => {
             {
                 author && status ? (<>
                         
-                            <div><img src={author.url} alt={author.name} /></div>
+                            <div><img src={author.photo} alt={author.name} /></div>
                             <div>{author.name}</div>
                             <div>{author.description}</div>
                     </>): 

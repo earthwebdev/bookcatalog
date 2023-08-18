@@ -190,7 +190,7 @@ const AdminGenresListPage = () => {
                         <div className="flex-shrink-0">
                           <img
                             className="w-10 h-10"
-                            src={genre?.url}
+                            src={genre?.photo}
                             alt={genre?.name}
                           />
                         </div>
