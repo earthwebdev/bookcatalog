@@ -48,6 +48,6 @@ DEV ENVIRONMENT
 
 Additional :
 
-1. Swagger Documentation
+1. Swagger Documentation (http://localhost:8085/api/v1/swagger/api-docs/)
 2. Containerized frontend & backend application
 3. Test cases

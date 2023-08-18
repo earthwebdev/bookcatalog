@@ -42,7 +42,7 @@ export const getLogin = async (req, res) => {
             token,
             roles: updateUser.roles,
             name: updateUser.name,
-            message: 'User logged in successfulyly.'
+            message: 'User found and logged in successfully'
         })
     } catch (error) {
         return res.status(400).json({
@@ -65,7 +65,7 @@ export const getRegister = async (req, res) => {
 
         const user = await UserModel.findOne({email});
         if(user){
-            return res.status(400).json({
+            return res.status(401).json({
                 status: false,
                 message: 'This email has already registered.'
             });

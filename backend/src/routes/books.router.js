@@ -110,6 +110,19 @@ const router = express.Router();
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Book'
+ * /books/all:
+ *   get:
+ *     summary: Lists all the books with title and id only
+ *     tags: [Books]
+ *     responses:
+ *       200:
+ *         description: The list of the books with title and id only
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Book'
  *   post:
  *     summary: Create a new book
  *     tags: [Books]
