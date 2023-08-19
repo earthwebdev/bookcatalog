@@ -13,32 +13,32 @@ const AuthorsList = ({pagelimits}) => {
                     title: "Name ",
                     description: "description goes heres",
                     image: './assets/imgs/abbey-hulton.jpg',
-                    hrefLink: '/authors/slug'
+                    hrefLink: '#'
                 },
     
                 {
                     title: "Name ",
                     description: "description goes heres",
                     image: './assets/imgs/abbas-combe.jpg',
-                    hrefLink: '/authors/slug'
+                    hrefLink: '#'
                 },
                 {
                     title: "Name ",
                     description: "description goes heres",
                     image: './assets/imgs/abbeydale.jpg',
-                    hrefLink: '/authors/slug'
+                    hrefLink: '#'
                 },
                 {
                     title: "Name ",
                     description: "description goes heres",
                     image: './assets/imgs/abbey-hulton.jpg',
-                    hrefLink: '/authors/slug'
+                    hrefLink: '#'
                 },
                 {
                     title: "Name ",
                     description: "description goes heres",
                     image: './assets/imgs/abbas-combe.jpg',
-                    hrefLink: '/authors/slug'
+                    hrefLink: '#'
                 },
             ]
         )

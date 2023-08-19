@@ -13,32 +13,32 @@ const GenresList = ({pagelimits}) => {
                     title: "title ",
                     description: "description goes heres",
                     image: './assets/imgs/abbey-hulton.jpg',
-                    hrefLink: '/genres/slug'
+                    hrefLink: '#'
                 },
     
                 {
                     title: "title ",
                     description: "description goes heres",
                     image: './assets/imgs/abbas-combe.jpg',
-                    hrefLink: '/genres/slug'
+                    hrefLink: '#'
                 },
                 {
                     title: "title ",
                     descrtiption: "description goes heres",
                     image: './assets/imgs/abbeydale.jpg',
-                    hrefLink: '/genres/slug'
+                    hrefLink: '#'
                 },
                 {
                     title: "title ",
                     descrtiption: "description goes heres",
                     image: './assets/imgs/abbey-hulton.jpg',
-                    hrefLink: '/genres/slug'
+                    hrefLink: '#'
                 },
                 {
                     title: "title ",
                     description: "description goes heres",
                     image: './assets/imgs/abbas-combe.jpg',
-                    hrefLink: '/genres/slug'
+                    hrefLink: '#'
                 },
             ]
         )
