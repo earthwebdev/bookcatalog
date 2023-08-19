@@ -102,8 +102,62 @@ router.patch('/register', getRegister);
  *                   
  */
 router.put('/forgotpassword', fortgetPassword);
+/**
+ * @swagger
+ *  /resetpassword/:resettoken:
+ *   post:
+ *     tags:
+ *       - Users
+ *     summary: resetpassword a user.
+ *     parameters:
+ *       - in: path
+ *         name: resettoken
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The reset token
+ *     requestBody:
+ *      content:
+ *       aplication/json:
+ *         schema:
+ *           type: object
+ *           properties:
+ *             password:
+ *               type: string
+ *           example:
+ *             password: abcdefgh123!
+ *         required:
+ *           - password
+ *     responses:
+ *       '200':
+ *         description: Password reset successfully.
+ *       '400':
+ *         description: Invalid password token / password expired
+ *                   
+ */
 router.post('/resetpassword/:resettoken', resetPassword);
 
+/**
+ * @swagger
+ *  /users/profile:
+ *   get:
+ *     tags:
+ *       - Users
+ *     summary: profile a user.
+ *     parameters:
+ *       - in: header
+ *         name: authorization
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The login bearer token
+ *     responses:
+ *       '200':
+ *         description: User get successfully..
+ *       '400':
+ *         description: Error message
+ *                   
+ */
 router.get('/profile', AuthMiddleware, getProfile);
 
 export default router;

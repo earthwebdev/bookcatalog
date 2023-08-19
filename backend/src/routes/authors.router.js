@@ -48,7 +48,7 @@ const router = express.Router();
  * @swagger
  * tags:
  *   name: Authors
- *   description: The books managing API
+ *   description: The authors managing API
  * /authors:
  *   get:
  *     summary: Lists all the authors
