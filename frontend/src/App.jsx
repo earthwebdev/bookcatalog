@@ -50,6 +50,7 @@ import ResetPasswordPage from "./pages/ResetPasswordPage";
 import SecureRoutes from "./routes/SecureRoutes";
 import PrivateRoutes from "./routes/PrivateRoutes";
 import Sidebar from "./components/Sidebar";
+import CartPage from "./pages/cart";
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -65,6 +66,8 @@ function App() {
         <Route path="/authors/:id" element={<AuthorDetailsPage />} />
 
         <Route path="/books/:id" element={<BookDetailPage />} />
+
+        <Route path="/cart" element={<CartPage />} />
 
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />

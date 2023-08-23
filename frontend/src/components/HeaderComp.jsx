@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { BiCart, BiSearch, BiUser } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { getLoggedIn, getRoleAccess, getName } from '../utils/helpers';
+import getTotalQuantity from "../utils/getTotalQuantity";
 const HeaderComp = () => {
   const [query, setQuery] = useState("");   
   const isLogin = getLoggedIn();
   const name = getName();
   const isAdmin = getRoleAccess('admin');
+  const totalItem = getTotalQuantity() || 0;
+
   const searchHandle = (event) => {
     event?.preventDefault();
     router.push(`/search?query=${query}`);
@@ -69,8 +72,8 @@ const HeaderComp = () => {
           </div>
 
           <div className="flex flex-row justify-between items-center gap-4 text-gray-300">
-            <Link to="/cart">
-              <BiCart />
+            <Link className="inline-flex" to="/cart">
+              <BiCart /><p>{totalItem > 0 ? totalItem:''}</p>
             </Link>
             {isLogin ? (
               <>

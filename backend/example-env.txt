@@ -1,0 +1,20 @@
+PORT=8085
+MONGO_URI=databaseurl
+
+SERVER_URL='http://localhost:8085'
+
+JWT_SECRT_KEY='keygoesheres'
+
+CLOUDINARY_CLOUD_NAME= 'cloud name'
+CLOUDINARY_API_KEY= 'api keys'
+CLOUDINARY_API_SECRET= 'cloud secret key'
+
+MAILTRAP_SMTP_HOST=hostname
+MAILTRAP_SMTP_PORT=portNo
+MAILTRAP_SMTP_USER='username'
+MAILTRAP_SMTP_PASSWORD='password mailtrap'
+MAILTRAP_FROM_NAME="Bookcatalog"
+MAILTRAP_FROM_EMAIL="noreply@mailtrap.io"
+
+STRIPE_API_KEY='strip key'
+STRIPE_SECRET_KEY='stripe secret key'

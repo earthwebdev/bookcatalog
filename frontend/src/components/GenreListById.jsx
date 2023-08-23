@@ -2,7 +2,7 @@ import React from 'react'
 import CardListType from './CardListType'
 import { useState, useEffect } from 'react'
 import Carousel from 'react-grid-carousel'
-
+import { getDataWithoutToken } from '../services/axios.service'
 
 const GenreListById = (props) => {    
     const {id} = props.data;
