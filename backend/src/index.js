@@ -24,9 +24,28 @@ app.use(hpp());
 app.use(mongoSanitize());
 app.use(morgan('tiny'));
 
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+/* app.use(
+    ( req, res, next) => {
+      if (req.originalUrl === '/webhook') {
+        next();
+      } else {
+        express.json()(req, res, next);
 
+      }
+    }
+  ); */
+  app.use(
+    express.json({
+      verify: function (req, res, buf) {
+        if (req.originalUrl.includes('/webhook')) {
+          req.rawBody = buf.toString();          
+        }        
+            
+      }
+    })
+);
+    //app.use(express.json());
+    app.use(express.urlencoded({extended: true}));
 app.use('/api/v1', indexRouter);
 
 

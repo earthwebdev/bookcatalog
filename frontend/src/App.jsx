@@ -51,6 +51,8 @@ import SecureRoutes from "./routes/SecureRoutes";
 import PrivateRoutes from "./routes/PrivateRoutes";
 import Sidebar from "./components/Sidebar";
 import CartPage from "./pages/cart";
+import SuccessPaymnet from "./pages/SuccessPaymnet";
+import CanceledPayment from "./pages/CanceledPayment";
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -68,7 +70,9 @@ function App() {
         <Route path="/books/:id" element={<BookDetailPage />} />
 
         <Route path="/cart" element={<CartPage />} />
-
+        <Route path="/success" element={<SuccessPaymnet />} />
+        <Route path="/canceled" element={<CanceledPayment />} />
+        
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgetpassword" element={<ForgetPasswordPage />} />

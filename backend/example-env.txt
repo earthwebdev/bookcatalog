@@ -16,5 +16,7 @@ MAILTRAP_SMTP_PASSWORD='password mailtrap'
 MAILTRAP_FROM_NAME="Bookcatalog"
 MAILTRAP_FROM_EMAIL="noreply@mailtrap.io"
 
+CLIENT_URL='frontend url'
 STRIPE_API_KEY='strip key'
 STRIPE_SECRET_KEY='stripe secret key'
+STRIPE_WEB_HOOK='stripe web hook key'

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import { postDatasFromAxios } from '../services/axios.service';
 import LoginComp from '../components/Login';
 import {getLoggedIn, getRoleAccess} from '../utils/helpers';
@@ -21,6 +21,9 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const query = new URLSearchParams(useLocation().search);
+  const returnUrl = query.get("returnUrl");
+  //console.log(returnUrl, 'return url')
      //const isLogin =  useSelector((state) => state.auth.isLoggedIn);
      const isLogin = getLoggedIn();
      //const roleAdmin = useSelector((state) => state.auth.role);
@@ -79,8 +82,12 @@ const LoginPage = () => {
         dispatch(login(resp));                
         successToaster(resp?.message);
         //console.log(resp?.roles, 'roles');
+        if(returnUrl){
+          return navigate(`/${returnUrl}`);
+        }
         if(resp?.roles === 'admin'){
           //console.log('admin roles ');
+
           return navigate("/admin/dashboard");
         } else{
           console.log('user roles ');
